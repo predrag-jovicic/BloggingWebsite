@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190419152828_Initial.cs" />
+    <Compile Remove="Migrations\20190419154902_Initial.cs" />
+    <Compile Remove="Migrations\20190419160703_Initial.cs" />
+    <Compile Remove="Migrations\20190419162155_Initial.cs" />
+    <Compile Remove="Migrations\20190419175552_Initial.cs" />
+    <Compile Remove="Migrations\20190419175908_Initial.cs" />
+    <Compile Remove="Migrations\20190419180124_Initial.cs" />
+    <Compile Remove="Migrations\20190419180840_InitialMigration.cs" />
+    <Compile Remove="Migrations\20190419181327_Initial.cs" />
+    <Compile Remove="Migrations\20190419181642_Initial.cs" />
+    <Compile Remove="Migrations\20190419182025_Initial.cs" />
+    <Compile Remove="Migrations\20190419182616_Initial.cs" />
+    <Compile Remove="Migrations\20190419183036_Initial.cs" />
+    <Compile Remove="Migrations\20190419192244_Initial.cs" />
+    <Compile Remove="Migrations\20190419192509_Initial.cs" />
+    <Compile Remove="Migrations\20190419192607_Initial.cs" />
+    <Compile Remove="Migrations\20190419193214_Initial.cs" />
+    <Compile Remove="Migrations\20190419205943_Init.cs" />
+    <Compile Remove="Migrations\20190419210044_Init.cs" />
+    <Compile Remove="Migrations\20190419210608_Init.cs" />
+    <Compile Remove="Migrations\20190419210646_Init.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.identity.entityframeworkcore\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Identity.Stores">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.identity.stores\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Identity.Stores.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+</Project>
