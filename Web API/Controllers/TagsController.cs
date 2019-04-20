@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using DataAccess.ViewModels;
 using DataAccess;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Web_API.Controllers
 {
     [Route("api/[controller]")]
-    public class CategoriesController : Controller
+    public class TagsController : Controller
     {
-        UnitOfWork unitOfWork;
-        public CategoriesController(UnitOfWork unitOfWork)
+        private UnitOfWork unitOfWork;
+        public TagsController(UnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
         // GET: api/<controller>
         [HttpGet]
-        public IActionResult Get()
+        [Route("populartags")]
+        public IActionResult GetPopularTags()
         {
-            var categories = this.unitOfWork.CategoriesFetcher.GetCategories();
-            return Ok(categories);
+            var tags = this.unitOfWork.TagsFetcher.GetPopularTags();
+            return Ok(tags);
         }
 
         // GET api/<controller>/5

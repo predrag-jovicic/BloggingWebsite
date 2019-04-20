@@ -2,28 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using DataAccess.ViewModels;
 using DataAccess;
+using DataAccess.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Web_API.Controllers
 {
     [Route("api/[controller]")]
-    public class CategoriesController : Controller
+    public class PostsController : Controller
     {
         UnitOfWork unitOfWork;
-        public CategoriesController(UnitOfWork unitOfWork)
+        public PostsController(UnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
-        // GET: api/<controller>
+        [Route("postspreview/{page?}")]
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetRecentPosts(int? page)
         {
-            var categories = this.unitOfWork.CategoriesFetcher.GetCategories();
-            return Ok(categories);
+            var posts = this.unitOfWork.PostsFetcher.GetRecentPostsPreview(page);
+            return Ok(posts);
+        }
+        
+        [Route("postspreview/category/{category}/{page?}")]
+        [HttpGet]
+        public IActionResult GetRecentPostsByCategory(int category, int? page)
+        {
+            var posts = this.unitOfWork.PostsFetcher.GetRecentPostsPreviewByCategory(page,category);
+            return Ok(posts);
+        }
+
+        [Route("postspreview/tag/{tag}/{page?}")]
+        [HttpGet]
+        public IActionResult GetRecentPostsByTag(int tag, int? page)
+        {
+            var posts = this.unitOfWork.PostsFetcher.GetRecentPostsPreviewByTag(page, tag);
+            return Ok(posts);
         }
 
         // GET api/<controller>/5
