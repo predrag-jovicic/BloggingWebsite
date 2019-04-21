@@ -18,6 +18,7 @@ namespace Web_API.Controllers
         {
             this.unitOfWork = unitOfWork;
         }
+
         [Route("postspreview/{page?}")]
         [HttpGet]
         public IActionResult GetRecentPosts(int? page)
@@ -42,11 +43,38 @@ namespace Web_API.Controllers
             return Ok(posts);
         }
 
+        public IActionResult SearchPosts(string example)
+        {
+            var posts = this.unitOfWork.PostsFetcher.GetPostsByASearch(example);
+            return Ok(posts);
+        }
+
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(long id)
         {
-            return "value";
+            var post = this.unitOfWork.PostsRepository.GetPostById(id);
+            if (post == null)
+                return NotFound();
+            else
+            {
+                PostViewModel vm = new PostViewModel
+                {
+                    PostId = post.PostId,
+                    Title = post.Title,
+                    Text = post.Text,
+                    PostedOn = post.PostedOn,
+                    NumberOfViews = post.NumberOfViews,
+                    ReadTime = post.ReadTime,
+                    UserId = post.UserId,
+                    AuthorFirstName = post.User.FirstName,
+                    AuthorLastName = post.User.LastName,
+                    AuthorBiography = post.User.Biography
+                };
+                vm.Comments = this.unitOfWork.CommentsFetcher.GetCommentsByPostId(id);
+                vm.RecommendedPosts = this.unitOfWork.PostsFetcher.GetRecommendedPosts(id);
+                return Ok(vm);
+            }
         }
 
         // POST api/<controller>

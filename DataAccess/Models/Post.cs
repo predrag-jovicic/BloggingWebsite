@@ -17,6 +17,7 @@ namespace DataAccess.Models
         public string Text { get; set; }
         public DateTime PostedOn { get; set; }
         public byte ReadTime { get; set; }
+        public long NumberOfViews { get; set; }
 
         public short CategoryId { get; set; }
         [Required]

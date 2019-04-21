@@ -85,5 +85,27 @@ namespace DataAccess.FetchingOperations
                     ReadTime = p.ReadTime
                 });
         }
+
+        public IEnumerable<RecommendedPostsViewModel> GetRecommendedPosts(long id)
+        {
+            //
+        }
+
+        public IEnumerable<PostPreviewViewModel> GetPostsByASearch(string example)
+        {
+            return this.context.Posts
+                .Where(p => p.Text.Contains(example) || p.Title.Contains(example))
+                .Select(p => new PostPreviewViewModel
+                {
+                    PostId = p.PostId,
+                    Title = p.Title,
+                    PartialText = p.Text.Substring(0, 100),
+                    PostedOn = p.PostedOn,
+                    AuthorFirstName = p.User.FirstName,
+                    AuthorLastName = p.User.LastName,
+                    UserId = p.User.Id,
+                    ReadTime = p.ReadTime
+                });
+        }
     }
 }

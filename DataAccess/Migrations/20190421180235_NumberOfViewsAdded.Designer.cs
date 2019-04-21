@@ -4,14 +4,16 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    partial class BlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190421180235_NumberOfViewsAdded")]
+    partial class NumberOfViewsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,9 +121,8 @@ namespace DataAccess.Migrations
                     b.Property<string>("Text")
                         .IsRequired();
 
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("UserName");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("CommentId");
 
@@ -602,7 +603,8 @@ namespace DataAccess.Migrations
 
                     b.HasOne("DataAccess.Models.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataAccess.Models.Poll", b =>

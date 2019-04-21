@@ -5,17 +5,12 @@ using System.Text;
 
 namespace DataAccess.Repositories
 {
-    public class PostsRepository
+    public class TagsRepository
     {
         BlogDbContext context;
-        public PostsRepository(BlogDbContext context)
+        public TagsRepository(BlogDbContext context)
         {
             this.context = context;
-        } 
-
-        public Post GetPostById(long id)
-        {
-            return this.context.Posts.Find(id);
         }
     }
 }

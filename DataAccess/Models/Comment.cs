@@ -17,8 +17,8 @@ namespace DataAccess.Models
         public DateTime PostedOn { get; set; }
         public long? ReplyOnId { get; set; }
         public long PostId { get; set; }
-        [Required]
         public string UserId { get; set; }
+        public string UserName { get; set; }
 
         public Post Post { get; set; }
         public User User { get; set; }
