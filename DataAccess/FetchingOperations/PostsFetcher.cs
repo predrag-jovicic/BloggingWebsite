@@ -88,7 +88,7 @@ namespace DataAccess.FetchingOperations
 
         public IEnumerable<RecommendedPostsViewModel> GetRecommendedPosts(long id)
         {
-            //
+            return null;
         }
 
         public IEnumerable<PostPreviewViewModel> GetPostsByASearch(string example)
