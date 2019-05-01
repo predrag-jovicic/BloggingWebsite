@@ -34,8 +34,10 @@ namespace Web_API
         {
             services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<BlogDbContext>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
                 {
                     var jwtConfig = Configuration.GetSection("JWT");
                     var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["BaseKey"]));

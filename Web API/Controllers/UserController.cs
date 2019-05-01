@@ -30,13 +30,13 @@ namespace Web_API.Controllers
             this.configuration = configuration;
         }
         
-        //Test controller
+        //Test controller - it works
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer",Roles = "Administrator")]
+        [Authorize(Roles = "Administrator")]
         public string Get()
         {
             var user = User;
-            return null;
+            return userManager.GetUserId(User);
         }
 
         // GET api/<controller>/5
@@ -99,6 +99,7 @@ namespace Web_API.Controllers
             }
         }
 
+        //I don't have a logout method because it's not required to have one. If a user logs out, it's gonna delete the jwt token on the client.
         [Route("login")]
         [HttpPost]
         public async Task<IActionResult> SignIn(LogInViewModel model)
