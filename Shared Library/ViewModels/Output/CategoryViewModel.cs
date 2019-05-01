@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DataAccess.ViewModels
+namespace Shared_Library.ViewModels.Output
 {
     public class CategoryViewModel
     {

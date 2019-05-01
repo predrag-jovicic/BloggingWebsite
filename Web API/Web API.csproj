@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\Shared Library\Shared Library.csproj" />
   </ItemGroup>
 
 </Project>

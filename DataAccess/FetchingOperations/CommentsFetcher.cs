@@ -1,5 +1,5 @@
 ﻿using DataAccess.Models;
-using DataAccess.ViewModels;
+using Shared_Library.ViewModels.Output;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,21 @@ namespace DataAccess.FetchingOperations
                     AuthorName = c.UserName ?? c.User.FirstName + " " + c.User.LastName,
                     AuthorPhoto = c.User.Photo.Source,
                     Replies = GetReplyComments(c.CommentId)
+                });
+        }
+
+        public IEnumerable<CommentViewModel> GetUnApproved()
+        {
+            return this.context.Comments
+                .Where(c => c.Approved == false)
+                .Select(c => new CommentViewModel
+                {
+                    CommentId = c.CommentId,
+                    Text = c.Text,
+                    PostedOn = c.PostedOn,
+                    AuthorName = c.UserName ?? c.User.FirstName + " " + c.User.LastName,
+                    AuthorPhoto = c.User.Photo.Source,
+                    Replies = null
                 });
         }
 

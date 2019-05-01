@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccess.ViewModels
+namespace Shared_Library.ViewModels.Output
 {
     public class PostViewModel
     {
@@ -17,8 +17,5 @@ namespace DataAccess.ViewModels
         public string AuthorFirstName { get; set; }
         public string AuthorLastName { get; set; }
         public string AuthorBiography { get; set; }
-
-        public IEnumerable<RecommendedPostsViewModel> RecommendedPosts { get; set; }
-        public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }

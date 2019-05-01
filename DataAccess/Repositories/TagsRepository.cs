@@ -12,5 +12,11 @@ namespace DataAccess.Repositories
         {
             this.context = context;
         }
+
+        public void Add(Tag tag)
+        {
+            tag.Name = tag.Name.ToLower();
+            this.context.Tags.Add(tag);
+        }
     }
 }

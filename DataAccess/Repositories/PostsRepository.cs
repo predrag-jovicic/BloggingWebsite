@@ -13,9 +13,14 @@ namespace DataAccess.Repositories
             this.context = context;
         } 
 
-        public Post GetPostById(long id)
+        public Post GetById(long id)
         {
             return this.context.Posts.Find(id);
+        }
+
+        public void Add(Post post)
+        {
+            this.context.Add(post);
         }
     }
 }

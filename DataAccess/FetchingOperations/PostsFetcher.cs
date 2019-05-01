@@ -1,5 +1,5 @@
 ﻿using DataAccess.Models;
-using DataAccess.ViewModels;
+using Shared_Library.ViewModels.Output;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

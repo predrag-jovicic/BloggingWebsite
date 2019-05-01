@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Models;
-using DataAccess.ViewModels.Input;
+using Shared_Library.ViewModels.Input;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -46,8 +46,19 @@ namespace Web_API.Controllers
             return "value";
         }
 
+        [HttpGet]
+        [Route("checkusernameavailability/{name}")]
+        public IActionResult DoesExist(string name)
+        {
+            var user = this.userManager.FindByNameAsync(name).Result;
+            if (user == null)
+                return Ok(true);
+            else
+                return Ok(false);
+        }
+
         // This method is invoked by a SignIn method
-        public IActionResult GetToken(ClaimsIdentity claimsIdentity)
+        private IActionResult GetToken(ClaimsIdentity claimsIdentity)
         {
             var configReference = configuration.GetSection("JWT");
             var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configReference["BaseKey"]));
@@ -137,11 +148,16 @@ namespace Web_API.Controllers
         }
 
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut("editpersonaldata/{id}")]
+        public void Put(int id, [FromBody]NewUserViewModel model)
         {
-
+            if (ModelState.IsValid)
+            {
+                
+            }
         }
+
+        //public void ChangePassword() { }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]

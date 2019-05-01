@@ -210,7 +210,7 @@
                             </select>
                           </div>
 
-                          <div class="col-sm-12">
+                          <!-- <div class="col-sm-12">
                             <button type="button" class="commands">Bold</button>
                             <button type="button" class="commands">Italic</button>
                             <button type="button" class="commands">Insert a link</button>
@@ -218,11 +218,13 @@
                             <button type="button" class="commands">Insert a quote</button>
                             <button type="button" class="commands">Make an unordered list</button>
                             <button type="button" class="commands">Make an ordered list</button>
-                          </div>
+                          </div> -->
 
                           <div class="col-sm-12">
                             <div class="textarea-message form-group">
-                              <textarea id="message" class="textarea-message form-control" placeholder="Content" rows="15"></textarea>
+                              <textarea name="content" class="textarea-message form-control" id="message">
+                                &lt;p&gt;This is some sample content.&lt;/p&gt;
+                              </textarea>
                             </div>
                           </div>
 
@@ -321,6 +323,14 @@
 
   <!-- Main Javascript File  -->
   <script type="text/javascript" src="js/scripts.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/12.1.0/classic/ckeditor.js"></script>
+  <script>
+    ClassicEditor
+        .create( document.querySelector( '#message' ))
+        .catch( error => {
+            console.error( error );
+        } );
+  </script>
 
 
 </body>

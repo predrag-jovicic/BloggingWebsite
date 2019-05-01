@@ -1,5 +1,5 @@
 ﻿using DataAccess.Models;
-using DataAccess.ViewModels;
+using Shared_Library.ViewModels.Output;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +14,11 @@ namespace DataAccess.FetchingOperations
         public TagsFetcher(BlogDbContext context)
         {
             this.context = context;
+        }
+
+        public bool DoesExist(string tag)
+        {
+            return this.context.Tags.Any(t => t.Name == tag.ToLower());
         }
 
         public IEnumerable<TagViewModel> GetPopularTags()

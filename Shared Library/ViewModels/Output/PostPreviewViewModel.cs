@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccess.ViewModels
+namespace Shared_Library.ViewModels.Output
 {
     public class PostPreviewViewModel
     {
