@@ -16,11 +16,6 @@ namespace DataAccess.FetchingOperations
             this.context = context;
         }
 
-        public bool DoesExist(string tag)
-        {
-            return this.context.Tags.Any(t => t.Name == tag.ToLower());
-        }
-
         public IEnumerable<TagViewModel> GetPopularTags()
         {
             return this.context.Tags

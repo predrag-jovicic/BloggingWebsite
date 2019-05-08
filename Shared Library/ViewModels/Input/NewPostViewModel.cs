@@ -9,7 +9,7 @@ namespace Shared_Library.ViewModels.Input
     public class NewPostViewModel
     {
         [Required]
-        [RegularExpression("^[\\w\\s\\?\\.\\,\\!\\-\\&\\%\\#]{3,60}$")]
+        [RegularExpression(@"^[\w\s\?\.\,\!\-\&\%\#]{3,60}$")]
         public string Title { get; set; }
         [TagsValidation]
         public IEnumerable<string> Tags { get; set; }
@@ -18,6 +18,7 @@ namespace Shared_Library.ViewModels.Input
         public short CategoryId { get; set; }
         [Required]
         [DataType(DataType.MultilineText)]
+        [RegularExpression(@"^[\w\s\?\.\@\n\r\,\!\-\&\%\#]+$")]
         public string Content { get; set; }
     }
 }

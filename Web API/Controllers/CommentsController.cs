@@ -63,9 +63,9 @@ namespace Web_API.Controllers
         //{
         //    return "value";
         //}
-
-        // POST api/<controller>
+        
         [HttpPost]
+        [ActionName("CommentPost")]
         public async Task<IActionResult> Post([FromBody]NewCommentViewModel model)
         {
             if (ModelState.IsValid)
@@ -99,7 +99,7 @@ namespace Web_API.Controllers
                 }
                 this.unitOfWork.CommentsRepository.Add(newComment);
                 await this.unitOfWork.Save();
-                return Created("comments", new { id = newComment.CommentId });
+                return CreatedAtAction("CommentPost", new { id = newComment.CommentId });
             }
             else
             {

@@ -20,7 +20,22 @@ namespace DataAccess.Repositories
 
         public void Add(Post post)
         {
-            this.context.Add(post);
+            this.context.Posts.Add(post);
+        }
+
+        public void Update(Post post)
+        {
+            this.context.Posts.Update(post);
+        }
+
+        public void AddPostTag(PostTag postTag)
+        {
+            this.context.PostTags.Add(postTag);
+        }
+
+        public void Delete(Post post)
+        {
+            this.context.Posts.Remove(post);
         }
     }
 }

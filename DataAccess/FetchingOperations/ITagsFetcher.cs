@@ -7,7 +7,6 @@ namespace DataAccess.FetchingOperations
 {
     public interface ITagsFetcher
     {
-        bool DoesExist(string tag);
         IEnumerable<TagViewModel> GetPopularTags();
     }
 }

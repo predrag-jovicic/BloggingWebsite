@@ -33,17 +33,21 @@ namespace Web_API.Controllers
         //Test controller - it works
         [HttpGet]
         [Authorize(Roles = "Administrator")]
-        public string Get()
+        public IActionResult Get()
         {
-            var user = User;
-            return userManager.GetUserId(User);
+            var users = this.userManager.Users;
+            return Ok(users);
         }
 
-        // GET api/<controller>/5
+        
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
-            return "value";
+            var user = await this.userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+            else
+                return Ok(user);
         }
 
         [HttpGet]
@@ -95,7 +99,7 @@ namespace Web_API.Controllers
                 var result = await this.userManager.CreateAsync(user, newUser.Password);
                 if (result.Succeeded)
                 {
-                    result = await this.userManager.AddToRoleAsync(user, "blogger");
+                    result = await this.userManager.AddToRoleAsync(user, "Blogger");
                     if (!result.Succeeded)
                         return null;
                     else
@@ -120,6 +124,11 @@ namespace Web_API.Controllers
                 var user = await userManager.FindByNameAsync(model.Username);
                 if (user != null)
                 {
+                    if (await this.userManager.IsLockedOutAsync(user))
+                    {
+                        ModelState.AddModelError("userbanned", "Your account has been disabled by an administrator.");
+                        return Conflict(ModelState);
+                    }
                     var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
                     if (result.Succeeded)
                     {
@@ -135,7 +144,8 @@ namespace Web_API.Controllers
                     }
                     else
                     {
-                        return Conflict();
+                        ModelState.AddModelError("wrongpass", "The password you entered is incorrect");
+                        return Conflict(ModelState);
                     }
                 }
                 else
@@ -148,22 +158,87 @@ namespace Web_API.Controllers
         }
 
         // PUT api/<controller>/5
-        [HttpPut("editpersonaldata/{id}")]
-        public void Put(int id, [FromBody]NewUserViewModel model)
+        [HttpPatch("editpersonaldata/{id}")]
+        [Authorize(Roles = "Blogger")]
+        public async Task<IActionResult> EditPersonalData(string id, [FromBody]EditUserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                
+                string userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                if (id != userId)
+                    return Forbid();
+                else
+                {
+                    var user = await userManager.GetUserAsync(User);
+                    if (user == null)
+                        return BadRequest();
+                    user.FirstName = user.FirstName;
+                    user.LastName = user.LastName;
+                    user.Biography = user.Biography;
+                    user.UrlFacebook = user.UrlFacebook;
+                    user.UrlLinkedIn = user.UrlLinkedIn;
+                    user.UrlTwitter = user.UrlTwitter;
+                    await this.userManager.UpdateAsync(user);
+                    return NoContent();
+                }
             }
+            else
+                return BadRequest();
         }
 
-        //public void ChangePassword() { }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpPatch("changepassword/{id}")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(string id, ChangePasswordViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                string userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                if (userId != id)
+                    return Forbid();
+                else
+                {
+                    var user = await this.userManager.GetUserAsync(User);
+                    if (user == null)
+                        return BadRequest();
+                    var result = await this.userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                    if (result.Succeeded)
+                        return NoContent();
+                    else
+                        return Conflict();
+                }
+            }
+            else
+                return BadRequest();
+        }
+        
+        [Authorize(Roles = "Administrator")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            User user = await this.userManager.FindByIdAsync(id);
+            if (user == null)
+                return BadRequest();
+            var result = await this.userManager.DeleteAsync(user);
+            if (result.Succeeded)
+                return NoContent();
+            else
+                return StatusCode(500);
+        }
 
+        [Authorize(Roles = "Administrator")]
+        [HttpPatch("ban/{id}")]
+        public async Task<IActionResult> BanUser(string id)
+        {
+            User user = await this.userManager.FindByIdAsync(id);
+            if (user == null)
+                return BadRequest();
+            var result = await this.userManager.SetLockoutEnabledAsync(user, true);
+            if (result.Succeeded)
+            {
+                return NoContent();
+            }
+            else
+                return StatusCode(500);
         }
     }
 }

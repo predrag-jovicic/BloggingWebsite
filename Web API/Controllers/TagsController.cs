@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccess;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
+using Shared_Library.ViewModels.Input;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -36,20 +38,65 @@ namespace Web_API.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        [ActionName("TagPost")]
+        public async Task<IActionResult> Post([FromBody]TagInput model)
         {
+            if (ModelState.IsValid)
+            {
+                if (this.unitOfWork.TagsRepository.GetByName(model.Name) != null)
+                {
+                    ModelState.AddModelError("exists", "A tag with the name you entered already exists");
+                    return BadRequest(ModelState);
+                }
+                else
+                {
+                    Tag tag = new Tag
+                    {
+                        Name = model.Name
+                    };
+                    this.unitOfWork.TagsRepository.Add(tag);
+                    await this.unitOfWork.Save();
+                    return CreatedAtAction("TagPost", new { Id = tag.TagId });
+                }
+            }
+            else
+                return BadRequest(ModelState);
         }
 
-        // PUT api/<controller>/5
+        
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(short id, [FromBody]TagInput model)
         {
+            if (ModelState.IsValid)
+            {
+                var tag = this.unitOfWork.TagsRepository.GetById(id);
+                if (tag == null)
+                    return NotFound();
+                else
+                {
+                    tag.Name = model.Name;
+                    this.unitOfWork.TagsRepository.Update(tag);
+                    await this.unitOfWork.Save();
+                    return NoContent();
+                }
+            }
+            else
+                return BadRequest();
         }
 
-        // DELETE api/<controller>/5
+        
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(short id)
         {
+            var tag = this.unitOfWork.TagsRepository.GetById(id);
+            if (tag == null)
+                return NotFound();
+            else
+            {
+                this.unitOfWork.TagsRepository.Delete(tag);
+                await this.unitOfWork.Save();
+                return NoContent();
+            }
         }
     }
 }

@@ -54,8 +54,6 @@ namespace Web_API.Controllers
             return Ok(posts);
         }
 
-        // GET api/<controller>/5
-
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
@@ -89,8 +87,7 @@ namespace Web_API.Controllers
 
         [Authorize(Roles = "Blogger")]
         [HttpPost]
-        //Needs refactoring
-        //Warning - post content should be sanatized
+        [ActionName("PostCreate")]
         public async Task<IActionResult> Post([FromBody]NewPostViewModel newPost)
         {
             if (ModelState.IsValid)
@@ -109,17 +106,20 @@ namespace Web_API.Controllers
                 var tags = newPost.Tags;
                 foreach (var tag in tags)
                 {
-                    if (this.unitOfWork.TagsFetcher.DoesExist(tag))
+                    var wantedTag = this.unitOfWork.TagsRepository.GetByName(tag);
+                    if (wantedTag == null)
                     {
-                        return null;
+                        wantedTag = new Tag { Name = tag };
+                        this.unitOfWork.TagsRepository.Add(wantedTag);
                     }
-                    else
+                    this.unitOfWork.PostsRepository.AddPostTag(new PostTag
                     {
-                        this.unitOfWork.TagsRepository.Add(new Tag { Name = tag });
-                    }
+                        Tag = wantedTag,
+                        Post = post
+                    });
                 }
                 await this.unitOfWork.Save();
-                return null;
+                return CreatedAtAction("PostCreate", new { id = post.PostId });
             }
             else
             {
@@ -131,21 +131,68 @@ namespace Web_API.Controllers
         private byte CalculateReadTime(string content)
         {
             const short wordsPerMinute = 250;
-            const byte averageNoOfCharactersWord = 6;
             double numberOfCharacters = content.Length * 1.0;
-            return (byte)Math.Floor(numberOfCharacters / (250 * 6));
+            return (byte)Math.Floor(numberOfCharacters / wordsPerMinute);
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [Authorize(Roles = "Blogger")]
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Put(long id, [FromBody]NewPostViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var post = this.unitOfWork.PostsRepository.GetById(id);
+                if (post == null)
+                    return NotFound();
+                else
+                {
+                    post.CategoryId = model.CategoryId;
+                    post.Title = model.Title;
+                    post.Text = model.Content;
+                    foreach(var tag in model.Tags)
+                    {
+                        var wantedTag = this.unitOfWork.TagsRepository.GetByName(tag);
+                        if (wantedTag == null)
+                        {
+                            wantedTag = new Tag { Name = tag };
+                            this.unitOfWork.TagsRepository.Add(wantedTag);
+                        }
+                        this.unitOfWork.PostsRepository.AddPostTag(new PostTag
+                        {
+                            Tag = wantedTag,
+                            Post = post
+                        });
+                    }
+                }
+                await this.unitOfWork.Save();
+                return NoContent();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        // DELETE api/<controller>/5
+        [Authorize(Roles = "Moderator,Blogger")]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(long id)
         {
+            var post = this.unitOfWork.PostsRepository.GetById(id);
+            if (post == null)
+                return NotFound();
+            else
+            {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+                if (userId != post.UserId && role == "Blogger")
+                    return Forbid();
+                else
+                {
+                    this.unitOfWork.PostsRepository.Delete(post);
+                    await this.unitOfWork.Save();
+                    return NoContent();
+                }
+            }
         }
     }
 }

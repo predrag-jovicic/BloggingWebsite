@@ -52,7 +52,7 @@ namespace DataAccess.Models
                 new Tag { TagId = 1, Name = "Childhood" },
                 new Tag { TagId = 2, Name = "Young" },
                 new Tag { TagId = 3, Name = "Prevention" },
-                new Tag { TagId = 4, Name = "Early Phase" },
+                new Tag { TagId = 4, Name = "Early_Phase" },
                 new Tag { TagId = 5, Name = "Tumor" },
                 new Tag { TagId = 6, Name = "Cancer" },
                 new Tag { TagId = 7, Name = "Leukemia" }
