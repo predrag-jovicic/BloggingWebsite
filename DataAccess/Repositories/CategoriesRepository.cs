@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Repositories
 {
-    public class CategoriesRepository
+    public class CategoriesRepository : ICategoriesRepository
     {
         private BlogDbContext context;
         public CategoriesRepository(BlogDbContext context)

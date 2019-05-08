@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DataAccess.FetchingOperations
 {
-    public class PostsFetcher
+    public class PostsFetcher : IPostsFetcher
     {
         private BlogDbContext context;
         private const int numberOfItemsPerPage = 10;

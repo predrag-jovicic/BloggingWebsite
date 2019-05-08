@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 namespace DataAccess.FetchingOperations
 {
-    public class CategoriesFetcher
+    public class CategoriesFetcher : ICategoriesFetcher
     {
         private BlogDbContext context;
         public CategoriesFetcher(BlogDbContext context)

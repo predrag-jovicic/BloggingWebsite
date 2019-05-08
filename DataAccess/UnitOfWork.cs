@@ -10,14 +10,14 @@ namespace DataAccess
 {
     public class UnitOfWork
     {
-        public CategoriesRepository CategoriesRepository { get; set; }
-        public CategoriesFetcher CategoriesFetcher { get; set; }
-        public PostsRepository PostsRepository { get; set; }
-        public PostsFetcher PostsFetcher { get; set; }
-        public TagsFetcher TagsFetcher { get; set; }
-        public CommentsFetcher CommentsFetcher { get; set; }
-        public CommentsRepository CommentsRepository { get; set; }
-        public TagsRepository TagsRepository { get; set; }
+        public ICategoriesRepository CategoriesRepository { get; set; }
+        public ICategoriesFetcher CategoriesFetcher { get; set; }
+        public IPostsRepository PostsRepository { get; set; }
+        public IPostsFetcher PostsFetcher { get; set; }
+        public ITagsFetcher TagsFetcher { get; set; }
+        public ICommentsFetcher CommentsFetcher { get; set; }
+        public ICommentsRepository CommentsRepository { get; set; }
+        public ITagsRepository TagsRepository { get; set; }
         private BlogDbContext context;
         public UnitOfWork(BlogDbContext context)
         {

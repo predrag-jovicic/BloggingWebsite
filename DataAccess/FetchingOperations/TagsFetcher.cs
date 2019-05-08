@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.FetchingOperations
 {
-    public class TagsFetcher
+    public class TagsFetcher : ITagsFetcher
     {
         private BlogDbContext context;
         public TagsFetcher(BlogDbContext context)

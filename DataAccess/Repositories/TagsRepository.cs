@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Repositories
 {
-    public class TagsRepository
+    public class TagsRepository : ITagsRepository
     {
         BlogDbContext context;
         public TagsRepository(BlogDbContext context)

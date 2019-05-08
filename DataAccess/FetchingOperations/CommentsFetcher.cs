@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DataAccess.FetchingOperations
 {
-    public class CommentsFetcher
+    public class CommentsFetcher : ICommentsFetcher
     {
         BlogDbContext context;
         public CommentsFetcher(BlogDbContext context)

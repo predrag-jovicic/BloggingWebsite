@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Repositories
 {
-    public class PostsRepository
+    public class PostsRepository : IPostsRepository
     {
         BlogDbContext context;
         public PostsRepository(BlogDbContext context)

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess.Repositories
 {
-    public class CommentsRepository
+    public class CommentsRepository : ICommentsRepository
     {
         private BlogDbContext context;
         public CommentsRepository(BlogDbContext context)
