@@ -88,6 +88,7 @@ namespace Web_API.Controllers
         [Authorize(Roles = "Blogger")]
         [HttpPost]
         [ActionName("PostCreate")]
+        // to be continued
         public async Task<IActionResult> Post([FromBody]NewPostViewModel newPost)
         {
             if (ModelState.IsValid)
@@ -137,7 +138,8 @@ namespace Web_API.Controllers
 
         [Authorize(Roles = "Blogger")]
         [HttpPatch("{id}")]
-        public async Task<IActionResult> Put(long id, [FromBody]NewPostViewModel model)
+        //to be continued-
+        public async Task<IActionResult> Patch(long id, [FromBody]NewPostViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -156,12 +158,20 @@ namespace Web_API.Controllers
                         {
                             wantedTag = new Tag { Name = tag };
                             this.unitOfWork.TagsRepository.Add(wantedTag);
+                            this.unitOfWork.PostsRepository.AddPostTag(new PostTag
+                            {
+                                Tag = wantedTag,
+                                Post = post
+                            });
                         }
-                        this.unitOfWork.PostsRepository.AddPostTag(new PostTag
+                        else
                         {
-                            Tag = wantedTag,
-                            Post = post
-                        });
+                            if(!this.unitOfWork.PostsRepository.HasTag(post.PostId, wantedTag.TagId))
+                            {
+                                PostTag postTag = new PostTag { PostId = post.PostId, TagId = wantedTag.TagId };
+                                this.unitOfWork.PostsRepository.AddPostTag(postTag);
+                            }
+                        }
                     }
                 }
                 await this.unitOfWork.Save();

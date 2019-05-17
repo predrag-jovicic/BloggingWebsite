@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataAccess;
 using Shared_Library.ViewModels.Input;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,17 +25,11 @@ namespace Web_API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var categories = this.unitOfWork.CategoriesFetcher.GetCategories();
+            var categories = this.unitOfWork.CategoriesRepository.GetAll();
             return Ok(categories);
         }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
         
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ActionName("CategoryPost")]
         public async Task<IActionResult> Post([FromBody]CategoryInput model)
@@ -62,6 +57,7 @@ namespace Web_API.Controllers
                 return BadRequest(ModelState);
         }
 
+        [Authorize(Roles ="Administrator")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(short id, [FromBody]CategoryInput model)
         {
@@ -81,6 +77,7 @@ namespace Web_API.Controllers
             return BadRequest();
         }
 
+        [Authorize(Roles="Administrator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(short id)
         {

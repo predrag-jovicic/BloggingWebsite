@@ -25,15 +25,44 @@ namespace DataAccess.Repositories
             this.context.Tags.Remove(tag);
         }
 
+        public void DeletePostTag(PostTag postTag)
+        {
+            this.context.PostTags.Remove(postTag);
+        }
+
         public Tag GetById(short id)
         {
             return this.context.Tags.Find(id);
+        }
+
+        public PostTag GetPostTag(long postId, short tagId)
+        {
+            return this.context.PostTags
+                .SingleOrDefault(pt => pt.PostId == postId && pt.TagId == tagId);
+        }
+
+        public IEnumerable<Tag> GetAll()
+        {
+            return this.context.Tags;
+        }
+
+        public IEnumerable<Tag> GetPopularTags()
+        {
+            return this.context.Tags
+                .OrderByDescending(t => t.PostTags.Count());
         }
 
         public Tag GetByName(string tag)
         {
             return this.context.Tags
                 .SingleOrDefault(t => t.Name == tag.ToLower());
+        }
+
+        public IEnumerable<Tag> GetTagsByPostId(long id)
+        {
+            return this.context.PostTags
+                .Where(pt => pt.PostId == id)
+                .Select(pt => pt.Tag);
         }
 
         public void Update(Tag tag)

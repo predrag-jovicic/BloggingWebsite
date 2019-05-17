@@ -7,6 +7,7 @@ namespace DataAccess.Repositories
 {
     public interface ICategoriesRepository
     {
+        IEnumerable<Category> GetAll();
         Category GetById(short id);
         Category GetByName(string name);
         void Delete(Category category);

@@ -32,6 +32,7 @@ namespace DataAccess.Models
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasIndex(c => c.Name);
+            modelBuilder.Entity<Tag>().HasIndex(t => t.Name);
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryId = 1, Name = "Bladder Cancer"},

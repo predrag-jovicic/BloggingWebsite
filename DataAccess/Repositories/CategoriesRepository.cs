@@ -24,6 +24,11 @@ namespace DataAccess.Repositories
             this.context.Remove(category);
         }
 
+        public IEnumerable<Category> GetAll()
+        {
+            return this.context.Categories;
+        }
+
         public Category GetById(short id)
         {
             return this.context.Categories.Find(id);

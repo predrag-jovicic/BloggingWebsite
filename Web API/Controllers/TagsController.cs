@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataAccess;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared_Library.ViewModels.Input;
 
@@ -20,50 +21,41 @@ namespace Web_API.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        // GET: api/<controller>
         [HttpGet]
-        [Route("populartags")]
+        [Route("popular")]
         public IActionResult GetPopularTags()
         {
-            var tags = this.unitOfWork.TagsFetcher.GetPopularTags();
+            var tags = this.unitOfWork.TagsRepository.GetPopularTags();
             return Ok(tags);
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("post/{id}")]
+        public IActionResult GetPostTags(long id)
         {
-            return "value";
+            var tags = this.unitOfWork.TagsRepository.GetTagsByPostId(id);
+            return Ok(tags);
         }
-
-        // POST api/<controller>
-        [HttpPost]
-        [ActionName("TagPost")]
-        public async Task<IActionResult> Post([FromBody]TagInput model)
+]
+        [HttpDelete("posttag")]
+        public async Task<IActionResult> DeletePostTag(PostTagDeletionViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (this.unitOfWork.TagsRepository.GetByName(model.Name) != null)
-                {
-                    ModelState.AddModelError("exists", "A tag with the name you entered already exists");
-                    return BadRequest(ModelState);
-                }
+                var postTag = this.unitOfWork.TagsRepository.GetPostTag(model.PostId, model.TagId);
+                if (postTag == null)
+                    return NotFound();
                 else
                 {
-                    Tag tag = new Tag
-                    {
-                        Name = model.Name
-                    };
-                    this.unitOfWork.TagsRepository.Add(tag);
+                    this.unitOfWork.PostsRepository.DeletePostTag(postTag);
                     await this.unitOfWork.Save();
-                    return CreatedAtAction("TagPost", new { Id = tag.TagId });
+                    return NoContent();
                 }
             }
             else
-                return BadRequest(ModelState);
+                return BadRequest();
         }
 
-        
+        [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(short id, [FromBody]TagInput model)
         {
@@ -85,6 +77,7 @@ namespace Web_API.Controllers
         }
 
         
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(short id)
         {

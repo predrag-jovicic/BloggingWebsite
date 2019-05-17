@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Shared_Library.ViewModels.Output;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -47,7 +48,19 @@ namespace Web_API.Controllers
             if (user == null)
                 return NotFound();
             else
-                return Ok(user);
+            {
+                var vm = new UserViewModel
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Username = user.UserName,
+                    Biography = user.Biography,
+                    UrlFacebook = user.UrlFacebook,
+                    UrlLinkedIn = user.UrlLinkedIn,
+                    UrlTwitter = user.UrlTwitter,
+                };
+                return Ok(vm);
+            }
         }
 
         [HttpGet]

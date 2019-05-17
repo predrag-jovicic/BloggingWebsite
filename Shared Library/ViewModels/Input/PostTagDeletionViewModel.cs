@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Shared_Library.ViewModels.Output
+namespace Shared_Library.ViewModels.Input
 {
-    public class TagViewModel
+    public class PostTagDeletionViewModel
     {
+        public long PostId { get; set; }
         public short TagId { get; set; }
-        public string Name { get; set; }
     }
 }
