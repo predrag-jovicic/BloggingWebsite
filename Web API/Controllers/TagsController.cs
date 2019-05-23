@@ -35,7 +35,7 @@ namespace Web_API.Controllers
             var tags = this.unitOfWork.TagsRepository.GetTagsByPostId(id);
             return Ok(tags);
         }
-]
+
         [HttpDelete("posttag")]
         public async Task<IActionResult> DeletePostTag(PostTagDeletionViewModel model)
         {

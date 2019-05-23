@@ -52,7 +52,7 @@ namespace Web_API
                     };
                 });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddScoped<UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMemoryCache(option => option.ExpirationScanFrequency = TimeSpan.FromMinutes(5));
         }
 

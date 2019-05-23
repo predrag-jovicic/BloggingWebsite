@@ -15,8 +15,8 @@ namespace Web_API.Controllers
     [Route("api/[controller]")]
     public class CategoriesController : Controller
     {
-        UnitOfWork unitOfWork;
-        public CategoriesController(UnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork;
+        public CategoriesController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }

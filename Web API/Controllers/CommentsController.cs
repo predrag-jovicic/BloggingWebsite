@@ -16,8 +16,8 @@ namespace Web_API.Controllers
     [Route("api/[controller]")]
     public class CommentsController : Controller
     {
-        UnitOfWork unitOfWork;
-        public CommentsController(UnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork;
+        public CommentsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }

@@ -8,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
-        public ICategoriesRepository CategoriesRepository { get; set; }
-        public IPostsRepository PostsRepository { get; set; }
-        public IPostsFetcher PostsFetcher { get; set; }
-        public ICommentsFetcher CommentsFetcher { get; set; }
-        public ICommentsRepository CommentsRepository { get; set; }
-        public ITagsRepository TagsRepository { get; set; }
+        public ICategoriesRepository CategoriesRepository { get; }
+        public IPostsRepository PostsRepository { get; }
+        public IPostsFetcher PostsFetcher { get; }
+        public ICommentsFetcher CommentsFetcher { get; }
+        public ICommentsRepository CommentsRepository { get; }
+        public ITagsRepository TagsRepository { get; }
+        public IPollsRepository PollsRepository { get; }
+        public IPollAnswersRepository PollAnswersRepository { get; }
+
         private BlogDbContext context;
+
         public UnitOfWork(BlogDbContext context)
         {
             this.context = context;
@@ -26,6 +30,8 @@ namespace DataAccess
             TagsRepository = new TagsRepository(context);
             CommentsFetcher = new CommentsFetcher(context);
             CommentsRepository = new CommentsRepository(context);
+            PollsRepository = new PollsRepository(context);
+            PollAnswersRepository = new PollAnswersRepository(context);
         }
 
         public async Task Save()

@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Shared_Library.ValidationAttributes
 {
-    public class TagsValidationAttribute : ValidationAttribute
+    public class StringListValidationAttribute : ValidationAttribute
     {
         private Regex rx;
-
-        public TagsValidationAttribute()
+        public StringListValidationAttribute(string regexp)
         {
-            rx = new Regex(@"^[\w\s\-]{3,100}$");
+            rx = new Regex(regexp);
         }
-
         public override string FormatErrorMessage(string name)
         {
             return name;
@@ -28,7 +25,7 @@ namespace Shared_Library.ValidationAttributes
                 return new ValidationResult(FormatErrorMessage("Undefined list"));
             else
             {
-                foreach(string tag in tags)
+                foreach (string tag in tags)
                 {
                     if (!rx.IsMatch(tag))
                     {

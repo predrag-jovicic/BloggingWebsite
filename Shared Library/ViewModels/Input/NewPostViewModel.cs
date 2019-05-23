@@ -11,7 +11,7 @@ namespace Shared_Library.ViewModels.Input
         [Required]
         [RegularExpression(@"^[\w\s\?\.\,\!\-\&\%\#]{3,60}$")]
         public string Title { get; set; }
-        [TagsValidation]
+        [StringListValidation(@"^[\w\-]{3,20}$")]
         public IEnumerable<string> Tags { get; set; }
         [Range(1,short.MaxValue)]
         [Required]
