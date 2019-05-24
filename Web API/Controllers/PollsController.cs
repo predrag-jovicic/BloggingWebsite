@@ -25,14 +25,22 @@ namespace Web_API.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        [ActionName("GetPoll")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
+        [Authorize(Roles = "Blogger")]
+        [HttpGet("user")]
+        public IActionResult GetUserPolls()
+        {
+            string userId = this.userManager.GetUserId(User);
+            return Ok(this.unitOfWork.PollsRepository.GetUserPolls(userId));
+        }
+
         // GET api/<controller>/5
         [HttpGet("{id}")]
+        [ActionName("GetPoll")]
         public string Get(int id)
         {
             return "value";

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
@@ -25,6 +27,13 @@ namespace DataAccess.Repositories
         public Poll GetById(int id)
         {
             return this.dbContext.Polls.Find(id);
+        }
+
+        public IEnumerable<Poll> GetUserPolls(string userId)
+        {
+            return this.dbContext.Polls
+                .Include(p => p.PollAnswers)
+                .Where(p => p.UserId == userId);
         }
     }
 }

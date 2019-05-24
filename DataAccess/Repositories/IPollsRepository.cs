@@ -10,5 +10,6 @@ namespace DataAccess.Repositories
         Poll GetById(int id);
         void Add(Poll poll);
         void Delete(Poll poll);
+        IEnumerable<Poll> GetUserPolls(string userId);
     }
 }
