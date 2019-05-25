@@ -17,6 +17,9 @@ namespace DataAccess
         ITagsRepository TagsRepository { get; }
         IPollsRepository PollsRepository { get; }
         IPollAnswersRepository PollAnswersRepository { get; }
+        IPostPhotosRepository PostPhotosRepository { get; }
+        IPollsFetcher PollsFetcher { get; }
+        IVotesRepository VotesRepository { get; }
         Task Save();
     }
 }

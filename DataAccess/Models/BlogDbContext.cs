@@ -33,6 +33,7 @@ namespace DataAccess.Models
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasIndex(c => c.Name);
             modelBuilder.Entity<Tag>().HasIndex(t => t.Name);
+            modelBuilder.Entity<VotingGroup>().HasIndex(v => v.IpAddress);
 
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryId = 1, Name = "Bladder Cancer"},

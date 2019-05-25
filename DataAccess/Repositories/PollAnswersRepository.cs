@@ -16,5 +16,20 @@ namespace DataAccess.Repositories
         {
             this.dbContext.PollAnswers.Add(pollAnswer);
         }
+
+        public void Delete(PollAnswer pollAnswer)
+        {
+            this.dbContext.PollAnswers.Remove(pollAnswer);
+        }
+
+        public PollAnswer GetById(int id)
+        {
+            return this.dbContext.PollAnswers.Find(id);
+        }
+
+        public void Update(PollAnswer pollAnswer)
+        {
+            this.dbContext.PollAnswers.Update(pollAnswer);
+        }
     }
 }

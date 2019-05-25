@@ -23,30 +23,69 @@ namespace Web_API.Controllers
             this.userManager = userManager;
             this.unitOfWork = unitOfWork;
         }
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        //Get post polls
+        [HttpGet("post/{postId}")]
+        public IActionResult Get(long postId)
         {
-            return new string[] { "value1", "value2" };
+            var polls = this.unitOfWork.PollsFetcher.GetPollsByPostId(postId);
+            return Ok(polls);
         }
 
+        //Get user polls
         [Authorize(Roles = "Blogger")]
         [HttpGet("user")]
         public IActionResult GetUserPolls()
         {
             string userId = this.userManager.GetUserId(User);
-            return Ok(this.unitOfWork.PollsRepository.GetUserPolls(userId));
+            return Ok(this.unitOfWork.PollsFetcher.GetUserPolls(userId));
         }
 
-        // GET api/<controller>/5
+        // Get poll by pollId
         [HttpGet("{id}")]
         [ActionName("GetPoll")]
-        public string Get(int id)
+        public IActionResult GetById(int id)
         {
-            return "value";
+            var poll = this.unitOfWork.PollsFetcher.GetPollById(id);
+            if(poll == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(poll);
+            }
         }
 
-        // POST api/<controller>
+        // Get poll results
+        [HttpGet]
+        public IActionResult GetPollResults(int id)
+        {
+            return Ok(this.unitOfWork.PollsFetcher.GetPollResults(id));
+        }
+
+        [Authorize(Roles = "Blogger")]
+        [HttpPost]
+        public async Task<IActionResult> AttachExistingPollToPost(PollPostViewModel model)
+        {
+            var poll = this.unitOfWork.PollsRepository.GetById(model.PollId);
+            var post = this.unitOfWork.PostsRepository.GetById(model.PostId);
+            if (post == null || poll == null)
+                return BadRequest();
+            var userId = this.userManager.GetUserId(User);
+            if (poll.UserId != userId || post.UserId != userId)
+                return Forbid();
+            PostPoll postPoll = new PostPoll
+            {
+                Poll = poll,
+                Post = post
+            };
+            this.unitOfWork.PollsRepository.AddPollToPost(postPoll);
+            await this.unitOfWork.Save();
+            return StatusCode(201);
+        }
+
+        //Create a new poll
         [Authorize(Roles = "Blogger")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]NewPollViewModel model)
@@ -79,13 +118,32 @@ namespace Web_API.Controllers
                 return BadRequest();
         }
 
-        // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [Authorize(Roles = "Blogger")]
+        public async Task<IActionResult> Put(int id, [FromBody]UpdatePollViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                Poll poll = this.unitOfWork.PollsRepository.GetById(id);
+                if (poll == null)
+                    return BadRequest();
+                else
+                {
+                    poll.Active = model.Active;
+                    poll.ActiveUntil = model.ActiveUntil;
+                    poll.Question = model.Question;
+                    this.unitOfWork.PollsRepository.Update(poll);
+                    await this.unitOfWork.Save();
+                    return NoContent();
+                }
+            }
+            else
+            {
+                return UnprocessableEntity();
+            }
         }
 
-        // DELETE api/<controller>/5
+        
         [Authorize(Roles = "Blogger")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -105,6 +163,18 @@ namespace Web_API.Controllers
                     return NoContent();
                 }
             }
+        }
+
+        [Route("remove/{postPollId}")]
+        [Authorize(Roles = "Blogger")]
+        [HttpDelete]
+        public IActionResult RemovePollFromPost(int postPollId)
+        {
+            var poll = this.unitOfWork.PollsRepository.GetPostPollById(postPollId);
+            if (poll == null)
+                return BadRequest();
+            this.unitOfWork.PollsRepository.RemoveFromPost(poll);
+            return NoContent();
         }
     }
 }

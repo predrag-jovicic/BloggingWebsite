@@ -194,6 +194,8 @@ namespace Web_API.Controllers
             {
                 var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
                 var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+                // only bloggers and moderators may approach to this line of code
+                // then
                 if (userId != post.UserId && role == "Blogger")
                     return Forbid();
                 else

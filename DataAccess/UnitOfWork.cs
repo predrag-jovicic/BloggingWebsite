@@ -18,6 +18,9 @@ namespace DataAccess
         public ITagsRepository TagsRepository { get; }
         public IPollsRepository PollsRepository { get; }
         public IPollAnswersRepository PollAnswersRepository { get; }
+        public IPostPhotosRepository PostPhotosRepository { get; }
+        public IPollsFetcher PollsFetcher { get; }
+        public IVotesRepository VotesRepository { get; }
 
         private BlogDbContext context;
 
@@ -32,6 +35,9 @@ namespace DataAccess
             CommentsRepository = new CommentsRepository(context);
             PollsRepository = new PollsRepository(context);
             PollAnswersRepository = new PollAnswersRepository(context);
+            PostPhotosRepository = new PostPhotosRepository(context);
+            PollsFetcher = new PollsFetcher(context);
+            VotesRepository = new VotesRepository(context);
         }
 
         public async Task Save()

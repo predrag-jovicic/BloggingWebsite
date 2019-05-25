@@ -11,7 +11,8 @@ namespace Shared_Library.ValidationAttributes
         {
             DateTime dateTime = (DateTime)value;
             if (dateTime != null)
-            {   if(dateTime > DateTime.Now)
+            {
+                if (dateTime > DateTime.Now)
                 {
                     return ValidationResult.Success;
                 }
@@ -20,6 +21,8 @@ namespace Shared_Library.ValidationAttributes
                     return new ValidationResult(FormatErrorMessage("Datetime you entered is not in the future."));
                 }
             }
+            else
+                return ValidationResult.Success;
         }
     }
 }
