@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Application.ViewModels.Input;
+using Application.ViewModels.Output;
 using DataAccess;
-using DataAccess.Models;
+using Domain;
+using Implementations.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Shared_Library.ViewModels.Input;
-using Shared_Library.ViewModels.Output;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

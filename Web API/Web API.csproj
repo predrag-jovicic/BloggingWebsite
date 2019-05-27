@@ -12,8 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\Shared Library\Shared Library.csproj" />
+    <ProjectReference Include="..\Implementation\Implementation - EF.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DataAccess;
-using Shared_Library.ViewModels.Input;
-using DataAccess.Models;
 using Microsoft.AspNetCore.Authorization;
+using Application.Interfaces;
+using Application.ViewModels.Input;
+using Domain;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
