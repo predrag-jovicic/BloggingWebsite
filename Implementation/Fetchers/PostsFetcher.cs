@@ -89,7 +89,11 @@ namespace Implementations.Fetchers
 
         public IEnumerable<RecommendedPostsViewModel> GetRecommendedPosts(long id)
         {
-            return null;
+            return this.context.Posts.FromSql("SELECT DISTINCT TOP(4) p.PostId, Title, NumberOfViews FROM Posts p INNER JOIN PostTags pt ON p.PostId = pt.PostId WHERE pt.TagId IN(SELECT TagId FROM PostTags WHERE PostId = {0}) AND p.PostId <> {0} ORDER BY p.NumberOfViews", id).Select(p => new RecommendedPostsViewModel
+                {
+                    PostId = p.PostId,
+                    Title = p.Title
+                }).ToList();
         }
 
         public IEnumerable<PostPreviewViewModel> GetPostsByASearch(string example)
@@ -107,6 +111,28 @@ namespace Implementations.Fetchers
                     UserId = p.User.Id,
                     ReadTime = p.ReadTime
                 });
+        }
+
+        public PostViewModel GetPostByPostId(long id)
+        {
+               var p = this.context.Posts
+               .Include(post => post.User)
+               .SingleOrDefault(post => post.PostId == id);
+            if (p != null)
+                return new PostViewModel
+                {
+                    PostId = p.PostId,
+                    Title = p.Title,
+                    UserId = p.UserId,
+                    ReadTime = p.ReadTime,
+                    Text = p.Text,
+                    PostedOn = p.PostedOn,
+                    NumberOfViews = p.NumberOfViews,
+                    AuthorLastName = p.User.LastName,
+                    AuthorFirstName = p.User.FirstName,
+                    AuthorBiography = p.User.Biography
+                };
+            else return null;
         }
     }
 }

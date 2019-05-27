@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using Application.ViewModels.Input;
 using Application.ViewModels.Output;
-using DataAccess;
 using Domain;
-using Implementations.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,8 +18,8 @@ namespace Web_API.Controllers
     [Route("api/[controller]")]
     public class PostsController : Controller
     {
-        UnitOfWork unitOfWork;
-        public PostsController(UnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork;
+        public PostsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
@@ -49,46 +48,34 @@ namespace Web_API.Controllers
             return Ok(posts);
         }
 
-        public IActionResult SearchPosts(string example)
+        [HttpGet("search/{query}")]
+        public IActionResult SearchPosts(string query)
         {
-            var posts = this.unitOfWork.PostsFetcher.GetPostsByASearch(example);
+            var posts = this.unitOfWork.PostsFetcher.GetPostsByASearch(query);
             return Ok(posts);
         }
 
         [HttpGet("{id}")]
+        [ActionName("PostGet")]
         public IActionResult Get(long id)
         {
-            var post = this.unitOfWork.PostsRepository.GetById(id);
+            var post = this.unitOfWork.PostsFetcher.GetPostByPostId(id);
             if (post == null)
                 return NotFound();
             else
-            {
-                PostViewModel vm = new PostViewModel
-                {
-                    PostId = post.PostId,
-                    Title = post.Title,
-                    Text = post.Text,
-                    PostedOn = post.PostedOn,
-                    NumberOfViews = post.NumberOfViews,
-                    ReadTime = post.ReadTime,
-                    UserId = post.UserId,
-                    AuthorFirstName = post.User.FirstName,
-                    AuthorLastName = post.User.LastName,
-                    AuthorBiography = post.User.Biography
-                };
-                return Ok(vm);
-            }
+                return Ok(post);
         }
 
+        [HttpGet]
         [Route("{id}/recommended")]
         public IActionResult GetRecommmendedPosts(long id)
         {
-            return Ok(this.unitOfWork.PostsFetcher.GetRecommendedPosts(id));
+            var posts = this.unitOfWork.PostsFetcher.GetRecommendedPosts(id);
+            return Ok(posts);
         }
 
         [Authorize(Roles = "Blogger")]
         [HttpPost]
-        [ActionName("PostCreate")]
         // to be continued
         public async Task<IActionResult> Post([FromBody]NewPostViewModel newPost)
         {
@@ -121,7 +108,7 @@ namespace Web_API.Controllers
                     });
                 }
                 await this.unitOfWork.Save();
-                return CreatedAtAction("PostCreate", new { id = post.PostId });
+                return CreatedAtAction("PostGet", new { id = post.PostId });
             }
             else
             {
@@ -134,12 +121,12 @@ namespace Web_API.Controllers
         {
             const short wordsPerMinute = 250;
             double numberOfCharacters = content.Length * 1.0;
-            return (byte)Math.Floor(numberOfCharacters / wordsPerMinute);
+            return (byte)Math.Ceiling(numberOfCharacters / wordsPerMinute);
         }
 
         [Authorize(Roles = "Blogger")]
         [HttpPatch("{id}")]
-        //to be continued-
+        //to be continued
         public async Task<IActionResult> Patch(long id, [FromBody]NewPostViewModel model)
         {
             if (ModelState.IsValid)

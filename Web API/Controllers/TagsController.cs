@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using Application.ViewModels.Input;
-using DataAccess;
-using Implementations.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,8 +14,8 @@ namespace Web_API.Controllers
     [Route("api/[controller]")]
     public class TagsController : Controller
     {
-        private UnitOfWork unitOfWork;
-        public TagsController(UnitOfWork unitOfWork)
+        private IUnitOfWork unitOfWork;
+        public TagsController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }

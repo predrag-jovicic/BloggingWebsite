@@ -7,6 +7,7 @@ namespace Application.Interfaces.FetchingOperations
 {
     public interface IPostsFetcher
     {
+        PostViewModel GetPostByPostId(long id);
         IEnumerable<PostPreviewViewModel> GetRecentPostsPreview(int? page);
         IEnumerable<PostPreviewViewModel> GetRecentPostsPreviewByCategory(int? page, int categoryId);
         IEnumerable<PostPreviewViewModel> GetRecentPostsPreviewByTag(int? page, int tagId);
