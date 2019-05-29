@@ -18,62 +18,22 @@ namespace Implementations.Fetchers
             this.context = context;
         }
 
-        private int NumberOfPostsToSkip(int? page)
+        public IEnumerable<PostPreviewViewModel> GetRecentPostsPreview(string searchQuery, int? category, int? tag, short numberOfItems, short pageNumber)
         {
-            if (page == null)
-                return 0;
-            else
+            var query = this.context.Posts.AsQueryable();
+            if (searchQuery != null)
             {
-                return ((int)page - 1) * numberOfItemsPerPage;
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(p => p.Title.ToLower().Contains(searchQuery) || p.Text.ToLower().Contains(searchQuery));
             }
-        }
-
-        public IEnumerable<PostPreviewViewModel> GetRecentPostsPreview(int? page)
-        {
-            return this.context.Posts
+            if(tag != null)
+                query = query.Where(p => p.PostTags.Any(t => t.TagId == tag));
+            if(category != null)
+                query = query.Where(p => p.CategoryId == category);
+            return query
                 .OrderByDescending(p => p.PostedOn)
-                .Skip(this.NumberOfPostsToSkip(page))
-                .Take(numberOfItemsPerPage)
-                .Select(p => new PostPreviewViewModel
-                {
-                    PostId = p.PostId,
-                    Title = p.Title,
-                    PartialText = p.Text.Substring(0, 100),
-                    PostedOn = p.PostedOn,
-                    AuthorFirstName = p.User.FirstName,
-                    AuthorLastName = p.User.LastName,
-                    UserId = p.User.Id,
-                    ReadTime = p.ReadTime
-                });
-        }
-
-        public IEnumerable<PostPreviewViewModel> GetRecentPostsPreviewByCategory(int? page, int categoryId)
-        {
-            return this.context.Posts
-                .Where(p => p.CategoryId == categoryId)
-                .OrderByDescending(p => p.PostedOn)
-                .Skip(this.NumberOfPostsToSkip(page))
-                .Take(numberOfItemsPerPage)
-                .Select(p => new PostPreviewViewModel
-                {
-                    PostId = p.PostId,
-                    Title = p.Title,
-                    PartialText = p.Text.Substring(0, 100),
-                    PostedOn = p.PostedOn,
-                    AuthorFirstName = p.User.FirstName,
-                    AuthorLastName = p.User.LastName,
-                    UserId = p.User.Id,
-                    ReadTime = p.ReadTime
-                });
-        }
-
-        public IEnumerable<PostPreviewViewModel> GetRecentPostsPreviewByTag(int? page, int tagId)
-        {
-            return this.context.Posts
-                .Where(p => p.PostTags.Any(pt => pt.TagId == tagId))
-                .OrderByDescending(p => p.PostedOn)
-                .Skip(this.NumberOfPostsToSkip(page))
-                .Take(numberOfItemsPerPage)
+                .Skip((pageNumber - 1)*numberOfItems)
+                .Take(numberOfItems)
                 .Select(p => new PostPreviewViewModel
                 {
                     PostId = p.PostId,
@@ -94,23 +54,6 @@ namespace Implementations.Fetchers
                     PostId = p.PostId,
                     Title = p.Title
                 }).ToList();
-        }
-
-        public IEnumerable<PostPreviewViewModel> GetPostsByASearch(string example)
-        {
-            return this.context.Posts
-                .Where(p => p.Text.Contains(example) || p.Title.Contains(example))
-                .Select(p => new PostPreviewViewModel
-                {
-                    PostId = p.PostId,
-                    Title = p.Title,
-                    PartialText = p.Text.Substring(0, 100),
-                    PostedOn = p.PostedOn,
-                    AuthorFirstName = p.User.FirstName,
-                    AuthorLastName = p.User.LastName,
-                    UserId = p.User.Id,
-                    ReadTime = p.ReadTime
-                });
         }
 
         public PostViewModel GetPostByPostId(long id)

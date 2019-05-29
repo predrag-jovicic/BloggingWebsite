@@ -26,9 +26,16 @@ namespace Implementations.Repositories
             this.context.Remove(category);
         }
 
-        public IEnumerable<Category> GetAll()
+        public IEnumerable<Category> Get(string searchQuery, short pageNumber, short numberOfItems)
         {
-            return this.context.Categories;
+            IQueryable<Category> query = this.context.Categories;
+            if(searchQuery != null)
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(c => c.Name.ToLower().Contains(searchQuery));
+            }
+            return query.Skip((pageNumber - 1) * numberOfItems)
+                        .Take(numberOfItems);
         }
 
         public Category GetById(short id)

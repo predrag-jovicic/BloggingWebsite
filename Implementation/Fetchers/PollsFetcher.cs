@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.FetchingOperations;
 using Application.ViewModels.Output;
 using DataAccess;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -44,28 +45,45 @@ namespace Implementations.Fetchers
                 });
         }
 
-        public IQueryable<PollViewModel> GetPollsByPostId(long id)
+        public IQueryable<PollViewModel> GetPollsByPostId(long id, string searchQuery, short numberOfItems, short pageNumber)
         {
-            return this.dbContext.PostPolls
-                .Where(p => p.PostId == id)
-                .Include(p => p.Poll)
-                .ThenInclude(p => p.PollAnswers)
-                .Select(p => new PollViewModel
-                {
-                    PollId = p.PollId,
-                    Active = p.Poll.Active,
-                    ActiveUntil = p.Poll.ActiveUntil,
-                    Question = p.Poll.Question,
-                    MultipleAnswers = p.Poll.MultipleAnswers,
-                    Answers = GetPollAnswersByPollId(p.PollId)
-                });
+            IQueryable<PostPoll> query = this.dbContext.PostPolls
+            .Where(p => p.PostId == id)
+            .Include(p => p.Poll)
+            .ThenInclude(p => p.PollAnswers);
+
+            if (searchQuery != null)
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(p => p.Poll.Question.ToLower().Contains(searchQuery));
+            }
+
+            return query.Skip((pageNumber-1)*numberOfItems)
+            .Take(numberOfItems)
+            .Select(p => new PollViewModel
+            {
+                PollId = p.PollId,
+                Active = p.Poll.Active,
+                ActiveUntil = p.Poll.ActiveUntil,
+                Question = p.Poll.Question,
+                MultipleAnswers = p.Poll.MultipleAnswers,
+                Answers = GetPollAnswersByPollId(p.PollId)
+            });
         }
 
-        public IQueryable<PollViewModel> GetUserPolls(string id)
+        public IQueryable<PollViewModel> GetUserPolls(string id, string searchQuery, short numberOfItems, short pageNumber)
         {
-            return this.dbContext.Polls
+            IQueryable<Poll> query = this.dbContext.Polls;
+            if(searchQuery != null)
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(p => p.Question.ToLower().Contains(searchQuery));
+            }
+            return query
                 .Where(p => p.UserId == id)
                 .Include(p => p.PollAnswers)
+                .Skip((pageNumber-1)*numberOfItems)
+                .Take(numberOfItems)
                 .Select(p => new PollViewModel
                 {
                     PollId = p.PollId,

@@ -21,6 +21,14 @@ namespace Web_API.Controllers
         }
 
         [HttpGet]
+        public IActionResult Get(string searchQuery, short numberOfItems=10, short pageNumber=1)
+        {
+            if (numberOfItems > 10)
+                return BadRequest("The number of items has exceeded a limit");
+            return Ok(this.unitOfWork.TagsRepository.Get(searchQuery, numberOfItems, pageNumber));
+        }
+
+        [HttpGet]
         [Route("popular")]
         public IActionResult GetPopularTags()
         {

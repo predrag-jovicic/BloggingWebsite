@@ -23,21 +23,28 @@ namespace Web_API.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        [HttpGet("{id}")]
+        [ActionName("CommentPost")]
+        public IActionResult Get(long id)
+        {
+            return Ok(this.unitOfWork.CommentsRepository.GetById(id));
+        }
+
         [Route("post/{id}"),HttpGet]
-        public IActionResult GetCommentsByPostId(long id)
+        public IActionResult GetCommentsByPostId(long id,string searchQuery, short numberOfItems = 10, short pageNumber = 1)
         {
-            return Ok(this.unitOfWork.CommentsFetcher.GetCommentsByPostId(id));
+            return Ok(this.unitOfWork.CommentsFetcher.GetCommentsByPostId(id,searchQuery,numberOfItems,pageNumber));
         }
 
         [Authorize(Roles = "Moderator")]
-        [Route("/unapproved")]
-        public IActionResult GetUnApprovedComments()
+        [Route("unapproved")]
+        public IActionResult GetUnApprovedComments(string searchQuery, short numberOfItems = 10, short pageNumber = 1)
         {
-            return Ok(this.unitOfWork.CommentsFetcher.GetUnApproved());
+            return Ok(this.unitOfWork.CommentsFetcher.GetUnApproved(searchQuery,numberOfItems,pageNumber));
         }
 
         [Authorize(Roles = "Moderator")]
-        [Route("/approve/{id}")]
+        [Route("approve/{id}")]
         [HttpPatch]
         public async Task<IActionResult> ApproveComment(long id)
         {
@@ -53,7 +60,6 @@ namespace Web_API.Controllers
         }
         
         [HttpPost]
-        [ActionName("CommentPost")]
         public async Task<IActionResult> Post([FromBody]NewCommentViewModel model)
         {
             if (ModelState.IsValid)

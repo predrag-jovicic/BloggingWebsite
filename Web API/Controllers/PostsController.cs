@@ -24,34 +24,13 @@ namespace Web_API.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        [Route("postspreview/{page?}")]
+        [Route("postspreview")]
         [HttpGet]
-        public IActionResult GetRecentPosts(int? page)
+        public IActionResult GetRecentPosts(string searchQuery, int? category, int? tag, short numberOfItems = 10, short pageNumber = 1)
         {
-            var posts = this.unitOfWork.PostsFetcher.GetRecentPostsPreview(page);
-            return Ok(posts);
-        }
-        
-        [Route("postspreview/category/{category}/{page?}")]
-        [HttpGet]
-        public IActionResult GetRecentPostsByCategory(int category, int? page)
-        {
-            var posts = this.unitOfWork.PostsFetcher.GetRecentPostsPreviewByCategory(page,category);
-            return Ok(posts);
-        }
-
-        [Route("postspreview/tag/{tag}/{page?}")]
-        [HttpGet]
-        public IActionResult GetRecentPostsByTag(int tag, int? page)
-        {
-            var posts = this.unitOfWork.PostsFetcher.GetRecentPostsPreviewByTag(page, tag);
-            return Ok(posts);
-        }
-
-        [HttpGet("search/{query}")]
-        public IActionResult SearchPosts(string query)
-        {
-            var posts = this.unitOfWork.PostsFetcher.GetPostsByASearch(query);
+            if (numberOfItems > 15)
+                return BadRequest("The number of items has exceeded a limit");
+            var posts = this.unitOfWork.PostsFetcher.GetRecentPostsPreview(searchQuery,category,tag,numberOfItems,pageNumber);
             return Ok(posts);
         }
 

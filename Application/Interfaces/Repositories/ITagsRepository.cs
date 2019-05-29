@@ -8,7 +8,7 @@ namespace Application.Interfaces.Repositories
     public interface ITagsRepository
     {
         void Add(Tag tag);
-        IEnumerable<Tag> GetAll();
+        IEnumerable<Tag> Get(string searchQuery, short numberOfItems, short pageNumber);
         IEnumerable<Tag> GetPopularTags();
         IEnumerable<Tag> GetTagsByPostId(long id);
         Tag GetById(short id);

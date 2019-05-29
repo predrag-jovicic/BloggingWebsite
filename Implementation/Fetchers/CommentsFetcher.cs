@@ -6,6 +6,7 @@ using System.Text;
 using Application.ViewModels.Output;
 using Application.Interfaces.FetchingOperations;
 using DataAccess;
+using Domain;
 
 namespace Implementations.Fetchers
 {
@@ -17,10 +18,16 @@ namespace Implementations.Fetchers
             this.context = context;
         }
 
-        public IEnumerable<CommentViewModel> GetCommentsByPostId(long id)
+        public IQueryable<CommentViewModel> GetCommentsByPostId(long id, string searchQuery, short numberOfItems, short pageNumber)
         {
-            return this.context.Comments
-                .Where(c => c.PostId == id && c.Approved == true)
+            var query = this.context.Comments.AsQueryable();
+            if (searchQuery != null)
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(c => c.Text.ToLower().Contains(searchQuery));
+            }
+            return query
+                .Where(c => c.PostId == id && c.Approved == true && c.ReplyOnId == null)
                 .Select(c => new CommentViewModel
                 {
                     CommentId = c.CommentId,
@@ -28,14 +35,24 @@ namespace Implementations.Fetchers
                     PostedOn = c.PostedOn,
                     AuthorName = c.UserName ?? c.User.FirstName + " " + c.User.LastName,
                     AuthorPhoto = c.User.Photo.Source,
-                    Replies = GetReplyComments(c.CommentId)
-                });
+                    Replies = this.GetReplyComments(c.CommentId)
+                })
+                .Skip((pageNumber - 1) * numberOfItems)
+                .Take(numberOfItems);
         }
 
-        public IEnumerable<CommentViewModel> GetUnApproved()
+        public IEnumerable<CommentViewModel> GetUnApproved(string searchQuery, short numberOfItems, short pageNumber)
         {
-            return this.context.Comments
+            var query = this.context.Comments.AsQueryable();
+            if(searchQuery != null)
+            {
+                searchQuery = searchQuery.ToLower();
+                query = query.Where(c => c.Text.ToLower().Contains(searchQuery));
+            }
+            return query
                 .Where(c => c.Approved == false)
+                .Skip((pageNumber-1)*numberOfItems)
+                .Take(numberOfItems)
                 .Select(c => new CommentViewModel
                 {
                     CommentId = c.CommentId,
@@ -47,9 +64,9 @@ namespace Implementations.Fetchers
                 });
         }
 
-        public IEnumerable<CommentViewModel> GetReplyComments(long id)
+        public IQueryable<CommentViewModel> GetReplyComments(long id)
         {
-            return this.context.Comments
+                return this.context.Comments
                 .Where(c => c.ReplyOnId == id && c.Approved == true)
                 .Select(c => new CommentViewModel
                 {
@@ -58,7 +75,7 @@ namespace Implementations.Fetchers
                     PostedOn = c.PostedOn,
                     AuthorName = c.UserName ?? c.User.FirstName + " " + c.User.LastName,
                     AuthorPhoto = c.User.Photo.Source,
-                    Replies = this.GetReplyComments(id)
+                    Replies = this.GetReplyComments(c.CommentId)
                 });
         }
     }

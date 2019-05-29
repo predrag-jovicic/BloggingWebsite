@@ -23,9 +23,9 @@ namespace Web_API.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(short numberOfItems = 10, short pageNumber = 1)
         {
-            var roles = this.roleManager.Roles;
+            var roles = this.roleManager.Roles.Skip((pageNumber-1)*numberOfItems).Take(numberOfItems);
             var vm = roles.Select(r => new RoleViewModel
             {
                 RoleId = r.Id,

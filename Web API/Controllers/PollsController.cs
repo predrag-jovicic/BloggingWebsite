@@ -27,19 +27,19 @@ namespace Web_API.Controllers
 
         //Get post polls
         [HttpGet("post/{postId}")]
-        public IActionResult Get(long postId)
+        public IActionResult Get(long postId, string searchQuery, short numberOfItems = 10, short pageNumber = 1)
         {
-            var polls = this.unitOfWork.PollsFetcher.GetPollsByPostId(postId);
+            var polls = this.unitOfWork.PollsFetcher.GetPollsByPostId(postId,searchQuery,numberOfItems,pageNumber);
             return Ok(polls);
         }
 
         //Get user polls
         [Authorize(Roles = "Blogger")]
         [HttpGet("user")]
-        public IActionResult GetUserPolls()
+        public IActionResult GetUserPolls(string searchQuery, short numberOfItems = 10, short pageNumber = 1)
         {
             string userId = this.userManager.GetUserId(User);
-            return Ok(this.unitOfWork.PollsFetcher.GetUserPolls(userId));
+            return Ok(this.unitOfWork.PollsFetcher.GetUserPolls(userId, searchQuery, numberOfItems, pageNumber));
         }
 
         // Get poll by pollId

@@ -43,15 +43,22 @@ namespace Implementations.Repositories
                 .SingleOrDefault(pt => pt.PostId == postId && pt.TagId == tagId);
         }
 
-        public IEnumerable<Tag> GetAll()
+        public IEnumerable<Tag> Get(string searchQuery, short numberOfItems, short pageNumber)
         {
-            return this.context.Tags;
+            IQueryable<Tag> tags = this.context.Tags;
+            if(searchQuery != null)
+            {
+                tags = tags.Where(t => t.Name.ToLower().Contains(searchQuery.ToLower()));
+            }
+            return tags.Skip((pageNumber - 1)*numberOfItems).Take(numberOfItems)
+                       .ToList();
         }
 
         public IEnumerable<Tag> GetPopularTags()
         {
             return this.context.Tags
-                .OrderByDescending(t => t.PostTags.Count());
+                .OrderByDescending(t => t.PostTags.Count())
+                .Take(6);
         }
 
         public Tag GetByName(string tag)

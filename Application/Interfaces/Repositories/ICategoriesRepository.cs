@@ -7,7 +7,7 @@ namespace Application.Interfaces.Repositories
 {
     public interface ICategoriesRepository
     {
-        IEnumerable<Category> GetAll();
+        IEnumerable<Category> Get(string searchQuery, short pageNumber, short numberOfItems);
         Category GetById(short id);
         Category GetByName(string name);
         void Delete(Category category);

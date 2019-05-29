@@ -34,9 +34,9 @@ namespace Web_API.Controllers
         //Test controller - it works
         [HttpGet]
         [Authorize(Roles = "Administrator")]
-        public IActionResult Get()
+        public IActionResult Get(short numberOfItems = 10, short pageNumber = 1)
         {
-            var users = this.userManager.Users;
+            var users = this.userManager.Users.Skip((pageNumber-1)*numberOfItems).Take(numberOfItems);
             return Ok(users);
         }
 

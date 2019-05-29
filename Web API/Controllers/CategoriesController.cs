@@ -24,9 +24,11 @@ namespace Web_API.Controllers
         
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string searchQuery, short pageNumber = 1, short numberOfItems = 10)
         {
-            var categories = this.unitOfWork.CategoriesRepository.GetAll();
+            if (numberOfItems > 10)
+                return BadRequest("The number of items has exceeded a limit");
+            var categories = this.unitOfWork.CategoriesRepository.Get(searchQuery,pageNumber,numberOfItems);
             return Ok(categories);
         }
         
@@ -51,11 +53,11 @@ namespace Web_API.Controllers
                 else
                 {
                     ModelState.AddModelError("exists", "A category with the name you entered already exists");
-                    return BadRequest(ModelState);
+                    return UnprocessableEntity(ModelState);
                 }
             }
             else
-                return BadRequest(ModelState);
+                return UnprocessableEntity(ModelState);
         }
 
         [Authorize(Roles ="Administrator")]
@@ -75,7 +77,7 @@ namespace Web_API.Controllers
                     return NoContent();
                 }
             }
-            return BadRequest();
+            return UnprocessableEntity();
         }
 
         [Authorize(Roles="Administrator")]

@@ -8,10 +8,7 @@ namespace Application.Interfaces.FetchingOperations
     public interface IPostsFetcher
     {
         PostViewModel GetPostByPostId(long id);
-        IEnumerable<PostPreviewViewModel> GetRecentPostsPreview(int? page);
-        IEnumerable<PostPreviewViewModel> GetRecentPostsPreviewByCategory(int? page, int categoryId);
-        IEnumerable<PostPreviewViewModel> GetRecentPostsPreviewByTag(int? page, int tagId);
+        IEnumerable<PostPreviewViewModel> GetRecentPostsPreview(string searchQuery, int? category, int? tag, short numberOfItems, short pageNumber);
         IEnumerable<RecommendedPostsViewModel> GetRecommendedPosts(long id);
-        IEnumerable<PostPreviewViewModel> GetPostsByASearch(string example);
     }
 }
