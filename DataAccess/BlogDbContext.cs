@@ -29,6 +29,10 @@ namespace DataAccess
 
         }
 
+        public BlogDbContext()
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
