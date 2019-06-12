@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using Application.ViewModels.Input;
 using Application.ViewModels.Output;
 using Domain;
@@ -24,14 +26,22 @@ namespace Web_API.Controllers
         private SignInManager<User> signInManager;
         private UserManager<User> userManager;
         private IConfiguration configuration;
-        public UserController(SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration configuration)
+        private IEmailSender emailSender;
+        public UserController(SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration configuration, IEmailSender emailSender)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.configuration = configuration;
+            this.emailSender = emailSender;
         }
         
-        //Test controller - it works
+        /// <summary>
+        /// Returns users by specifying number of users to return and page number
+        /// </summary>
+        /// <remarks>
+        /// Request:
+        /// GET /user?numberOfItems=5,pageNumber=1
+        /// </remarks>
         [HttpGet]
         [Authorize(Roles = "Administrator")]
         public IActionResult Get(short numberOfItems = 10, short pageNumber = 1)
@@ -41,7 +51,7 @@ namespace Web_API.Controllers
         }
 
         
-        [HttpGet("{id}")]
+        [HttpGet("{id}"),ActionName("GetUser")]
         public async Task<IActionResult> Get(string id)
         {
             var user = await this.userManager.FindByIdAsync(id);
@@ -114,7 +124,15 @@ namespace Web_API.Controllers
                 {
                     result = await this.userManager.AddToRoleAsync(user, "Blogger");
                     if (!result.Succeeded)
-                        return null;
+                    {
+                        string token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+                        this.emailSender.ToEmail = newUser.Email;
+                        this.emailSender.Subject = "Blogging Website - Verify your account";
+                        var path = Url.Action("VerifyAccount",new { uid = user.Id, token = token });
+                        this.emailSender.Body = $"Click on this <a href=\"{path}\">link</a> to verify your account.";
+                        this.emailSender.Send();
+                        return CreatedAtAction("GetUser",user.Id);
+                    }
                     else
                         return StatusCode(500);
                 }
@@ -252,6 +270,23 @@ namespace Web_API.Controllers
             }
             else
                 return StatusCode(500);
+        }
+
+        [HttpGet("verifyaccount")]
+        [ActionName("VerifyAccount")]
+        public async Task<IActionResult> VerifyAccount(string uid, string token)
+        {
+            var user = await userManager.FindByIdAsync(uid);
+            if (user == null)
+                return BadRequest();
+            else
+            {
+                var result = this.userManager.ConfirmEmailAsync(user, token);
+                if (result.Result.Succeeded)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Web_API.Controllers
         }
 
         [Authorize(Roles = "Blogger")]
-        [HttpPost]
+        [HttpPost("attachpoll")]
         public async Task<IActionResult> AttachExistingPollToPost(PollPostViewModel model)
         {
             var poll = this.unitOfWork.PollsRepository.GetById(model.PollId);

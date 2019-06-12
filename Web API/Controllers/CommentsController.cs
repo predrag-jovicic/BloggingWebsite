@@ -38,6 +38,7 @@ namespace Web_API.Controllers
 
         [Authorize(Roles = "Moderator")]
         [Route("unapproved")]
+        [HttpGet]
         public IActionResult GetUnApprovedComments(string searchQuery, short numberOfItems = 10, short pageNumber = 1)
         {
             return Ok(this.unitOfWork.CommentsFetcher.GetUnApproved(searchQuery,numberOfItems,pageNumber));
