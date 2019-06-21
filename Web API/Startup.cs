@@ -57,9 +57,9 @@ namespace Web_API
                         IssuerSigningKey = symmetricKey
                     };
                 });
-            var section = Configuration.GetSection("Email");
-            var sender = new SmtpEmailSender(section["host"], int.Parse(section["port"]), section["fromaddress"], section["password"]);
-            services.AddSingleton<IEmailSender, SmtpEmailSender>();
+            //var section = Configuration.GetSection("Email");
+            //var sender = new SmtpEmailSender(section["host"], int.Parse(section["port"]), section["fromaddress"], section["password"]);
+            //services.AddSingleton<IEmailSender, SmtpEmailSender>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Web API", Version = "v1" });

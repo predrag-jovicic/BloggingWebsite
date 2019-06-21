@@ -27,7 +27,10 @@ namespace Web_API.Controllers
         [ActionName("CommentPost")]
         public IActionResult Get(long id)
         {
-            return Ok(this.unitOfWork.CommentsRepository.GetById(id));
+            var comment = this.unitOfWork.CommentsRepository.GetById(id);
+            if (comment == null)
+                return NotFound();
+            return Ok(comment);
         }
 
         [Route("post/{id}"),HttpGet]

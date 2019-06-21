@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Implementation\Implementation - EF.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\posts\" />
+  </ItemGroup>
+
 </Project>

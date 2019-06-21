@@ -7,7 +7,7 @@ namespace Application.ViewModels.Input
 {
     public class CategoryInput
     {
-        [RegularExpression(@"[\w]{2,30}")]
+        [RegularExpression(@"[\w\s]{2,30}")]
         public string Name { get; set; }
     }
 }

@@ -93,6 +93,10 @@ namespace Web_API.Controllers
                 return BadRequest();
             else
             {
+                if (System.IO.File.Exists(postPhoto.Source))
+                {
+                    System.IO.File.Delete(postPhoto.Source);
+                }
                 this.unitOfWork.PostPhotosRepository.Delete(postPhoto);
                 await this.unitOfWork.Save();
                 return NoContent();

@@ -27,12 +27,12 @@ namespace Web_API.Controllers
         private UserManager<User> userManager;
         private IConfiguration configuration;
         private IEmailSender emailSender;
-        public UserController(SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration configuration, IEmailSender emailSender)
+        public UserController(SignInManager<User> signInManager, UserManager<User> userManager, IConfiguration configuration/*,IEmailSender emailSender*/)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.configuration = configuration;
-            this.emailSender = emailSender;
+            //this.emailSender = emailSender;
         }
         
         /// <summary>
@@ -125,12 +125,12 @@ namespace Web_API.Controllers
                     result = await this.userManager.AddToRoleAsync(user, "Blogger");
                     if (!result.Succeeded)
                     {
-                        string token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-                        this.emailSender.ToEmail = newUser.Email;
-                        this.emailSender.Subject = "Blogging Website - Verify your account";
-                        var path = Url.Action("VerifyAccount",new { uid = user.Id, token = token });
-                        this.emailSender.Body = $"Click on this <a href=\"{path}\">link</a> to verify your account.";
-                        this.emailSender.Send();
+                        //string token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+                        //this.emailSender.ToEmail = newUser.Email;
+                        //this.emailSender.Subject = "Blogging Website - Verify your account";
+                        //var path = Url.Action("VerifyAccount",new { uid = user.Id, token = token });
+                        //this.emailSender.Body = $"Click on this <a href=\"{path}\">link</a> to verify your account.";
+                        //this.emailSender.Send();
                         return CreatedAtAction("GetUser",user.Id);
                     }
                     else
@@ -185,7 +185,7 @@ namespace Web_API.Controllers
                 }
             }
             else
-                return BadRequest();
+                return BadRequest(ModelState);
         }
 
         // PUT api/<controller>/5
