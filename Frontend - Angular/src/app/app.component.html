@@ -1,0 +1,124 @@
+<!-- Preloader Start -->
+<!-- <div class="preloader">
+  <div class="rounder"></div>
+</div> -->
+<!-- Preloader End -->
+
+
+
+
+<div id="main">
+  <div class="container">
+    <div class="row">
+
+
+
+      <!-- About Me (Left Sidebar) Start -->
+      <div class="col-md-3">
+        <div class="about-fixed">
+
+          <div class="my-pic">
+            <img src="assets/images/pic/sitephoto.png" alt="">
+          </div>
+
+
+
+          <div class="my-detail">
+            <h3>Categories</h3>
+
+            <app-blog-categories></app-blog-categories>
+
+            <h3>Popular tags</h3>
+
+            <app-blog-populartags></app-blog-populartags>
+            
+          </div>
+        </div>
+      </div>
+      <!-- About Me (Left Sidebar) End -->
+
+
+
+
+
+      <!-- Blog Post (Right Sidebar) Start -->
+      <div class="col-md-9">
+        <div class="col-md-12 page-body">
+          <div class="row">
+
+            <div class="sub-title">
+                <h2><a routerLink="/">My Blog</a></h2>
+              <a href="contact.html">
+                <i class="icon-envelope"></i>
+              </a>
+              <a routerLink="/createpost">
+                <i class="icon-pencil"></i>
+              </a>
+              <a (click)="onClick()">
+                <i class="icon-magnifier"></i>
+              </a>
+              <div *ngIf='visible'>
+                  <input type="search" class="form-control search" id="search"/>
+              </div>
+            </div>
+
+
+            <div class="col-md-12 content-page">
+
+              <router-outlet></router-outlet>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- Footer Start -->
+        <div class="col-md-12 page-body margin-top-50 footer">
+          <footer>
+            <ul class="menu-link">
+              <li>
+                <a href="index.html">Home</a>
+              </li>
+              <li>
+                <a href="about.html">About</a>
+              </li>
+              <li>
+                <a href="work.html">Work</a>
+              </li>
+              <li>
+                <a href="contact.html">Contact</a>
+              </li>
+            </ul>
+
+            <p>© Copyright 2016 DevBlog. All rights reserved</p>
+
+
+            <!-- UiPasta Credit Start -->
+            <div class="uipasta-credit">Design By
+              <a href="http://www.uipasta.com" target="_blank">UiPasta</a>
+            </div>
+            <!-- UiPasta Credit End -->
+
+
+          </footer>
+        </div>
+        <!-- Footer End -->
+
+
+      </div>
+      <!-- Blog Post (Right Sidebar) End -->
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Back to Top Start -->
+<a href="#" class="scroll-to-top">
+  <i class="fa fa-long-arrow-up"></i>
+</a>
+<!-- Back to Top End -->

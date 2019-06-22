@@ -1,0 +1,67 @@
+<div class="col-md-12 blog-post">
+
+
+  <!-- Post Headline Start -->
+  <div class="post-title">
+    <h1>{{post.title}}</h1>
+  </div>
+  <!-- Post Headline End -->
+
+
+  <!-- Post Detail Start -->
+  <div class="post-info">
+    <span>{{post.postedOn | date}} / by
+      <a href="#" target="_blank">{{post.authorFirstName}} {{post.authorFirstName}}</a>
+    </span>
+  </div>
+  <!-- Post Detail End -->
+
+
+  <p id="post-content">{{post.text}}</p>
+
+  <!-- Post Image Gallery Start -->
+  <div class="row margin-top-40 margin-bottom-40">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="images/blog/7.jpg" class="image-popup" title="image Title">
+        <img src="images/blog/7.jpg" class="img-responsive" alt="">
+      </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="images/blog/5.jpg" class="image-popup" title="image Title">
+        <img src="images/blog/5.jpg" class="img-responsive" alt="">
+      </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <a href="images/blog/6.jpg" class="image-popup" title="image Title">
+        <img src="images/blog/6.jpg" class="img-responsive" alt="">
+      </a>
+    </div>
+
+  </div>
+  <!-- Post Image Gallery End -->
+
+
+
+
+  <!-- Post Author Bio Box Start -->
+  <div class="about-author margin-top-70 margin-bottom-50">
+
+    <div class="picture">
+      <img src="images/blog/author.png" class="img-responsive" alt="">
+    </div>
+
+    <div class="c-padding">
+      <h3>Article By
+        <a href="#" target="_blank" data-toggle="tooltip" data-placement="top" title="Visit Alex Website">{{post.authorFirstName}} {{post.authorLastName}}</a>
+      </h3>
+      <p>{{post.authorBiography}}</p>
+    </div>
+  </div>
+  <!-- Post Author Bio Box End -->
+
+  <app-blog-recommendedposts></app-blog-recommendedposts>
+  <app-blog-comments></app-blog-comments>
+</div>

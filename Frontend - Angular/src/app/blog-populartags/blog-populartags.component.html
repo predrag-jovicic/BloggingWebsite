@@ -1,0 +1,5 @@
+<ul class="tags" *ngIf='popularTags && popularTags.length'>
+  <li *ngFor='let tag of popularTags'>
+    <a href="#" [attr.data-id]="tag.id" (click)="onClick($event)">{{tag.name}}</a>
+  </li>
+</ul>

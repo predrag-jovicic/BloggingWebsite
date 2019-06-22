@@ -1,0 +1,4 @@
+.load-more-button[disabled]:hover{
+    background-color: transparent;
+    box-shadow: none;
+}
