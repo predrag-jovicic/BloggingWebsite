@@ -7,6 +7,7 @@ using Application.ViewModels.Input;
 using Application.ViewModels.Output;
 using DataAccess;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,8 +23,8 @@ namespace Web_API.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
         [ActionName("GetPollAnswer")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             var pollAnswer = this.unitOfWork.PollAnswersRepository.GetById(id);
@@ -33,8 +34,9 @@ namespace Web_API.Controllers
                 return Ok(pollAnswer);
         }
 
+        [Authorize(Roles = "Blogger")]
         [HttpPost]
-        public async Task<IActionResult> Post(NewPollAnswerViewModel model)
+        public async Task<IActionResult> Post([FromBody]NewPollAnswerViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -47,21 +49,28 @@ namespace Web_API.Controllers
                 return UnprocessableEntity();
         }
 
+        [Authorize(Roles = "Blogger")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody]PollAnswerViewModel model)
         {
-            var pollAnswer = this.unitOfWork.PollAnswersRepository.GetById(id);
-            if (pollAnswer == null)
-                return BadRequest();
-            else
+            if (ModelState.IsValid)
             {
-                pollAnswer.Name = model.Name;
-                this.unitOfWork.PollAnswersRepository.Update(pollAnswer);
-                await this.unitOfWork.Save();
-                return NoContent();
+                var pollAnswer = this.unitOfWork.PollAnswersRepository.GetById(id);
+                if (pollAnswer == null)
+                    return BadRequest();
+                else
+                {
+                    pollAnswer.Name = model.Name;
+                    this.unitOfWork.PollAnswersRepository.Update(pollAnswer);
+                    await this.unitOfWork.Save();
+                    return NoContent();
+                }
             }
+            else
+                return Unauthorized();
         }
 
+        [Authorize(Roles = "Blogger")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

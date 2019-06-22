@@ -148,7 +148,7 @@ namespace Web_API.Controllers
         //I don't have a logout method because it's not required to have one. If a user logs out, it's gonna delete the jwt token on the client.
         [Route("login")]
         [HttpPost]
-        public async Task<IActionResult> SignIn(LogInViewModel model)
+        public async Task<IActionResult> SignIn([FromBody]LogInViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -219,7 +219,7 @@ namespace Web_API.Controllers
 
         [HttpPatch("changepassword/{id}")]
         [Authorize]
-        public async Task<IActionResult> ChangePassword(string id, ChangePasswordViewModel model)
+        public async Task<IActionResult> ChangePassword(string id, [FromBody]ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
             {

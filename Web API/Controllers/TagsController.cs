@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.ViewModels.Input;
@@ -44,10 +45,15 @@ namespace Web_API.Controllers
         }
 
         [HttpDelete("posttag")]
-        public async Task<IActionResult> DeletePostTag(PostTagDeletionViewModel model)
+        public async Task<IActionResult> DeletePostTag([FromBody]PostTagDeletionViewModel model)
         {
             if (ModelState.IsValid)
-            {
+            {   
+                var post = this.unitOfWork.PostsRepository.GetById(model.PostId);
+                if (post == null)
+                    return BadRequest();
+                if (post.UserId != User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value)
+                    return Forbid();
                 var postTag = this.unitOfWork.TagsRepository.GetPostTag(model.PostId, model.TagId);
                 if (postTag == null)
                     return NotFound();

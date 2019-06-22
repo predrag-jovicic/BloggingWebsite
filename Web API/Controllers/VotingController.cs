@@ -36,6 +36,8 @@ namespace Web_API.Controllers
                 return Conflict();
             else
             {
+                if (!poll.MultipleAnswers && model.VotedFor.Count > 1)
+                    return BadRequest("You've chosen more than 1 option");
                 VotingGroup votingGroup = new VotingGroup
                 {
                     IpAddress = ipAddress,

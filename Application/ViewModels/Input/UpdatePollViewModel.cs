@@ -8,6 +8,7 @@ namespace Application.ViewModels.Input
 {
     public class UpdatePollViewModel
     {
+        [Required]
         [RegularExpression(@"^[A-Za-z0-9\s\,\.\?\!\-\@\#]{8,250}$")]
         public string Question { get; set; }
         [FutureDateValidation]

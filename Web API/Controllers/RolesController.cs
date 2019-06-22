@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.ViewModels.Input;
 using Application.ViewModels.Output;
 using DataAccess;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,8 @@ namespace Web_API.Controllers
         [HttpGet]
         public IActionResult Get(short numberOfItems = 10, short pageNumber = 1)
         {
+            if (numberOfItems > 15)
+                return BadRequest("The number of items has exceeded a limit");
             var roles = this.roleManager.Roles.Skip((pageNumber-1)*numberOfItems).Take(numberOfItems);
             var vm = roles.Select(r => new RoleViewModel
             {
@@ -55,14 +58,19 @@ namespace Web_API.Controllers
 
         [Authorize(Roles = "Administrator")]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]string value)
+        public async Task<IActionResult> Post([FromBody]NewRoleViewModel model)
         {
-            IdentityRole role = new IdentityRole
+            if (ModelState.IsValid)
             {
-                Name = value
-            };
-            await this.roleManager.CreateAsync(role);
-            return CreatedAtAction("GetRole", new { id = role.Id });
+                IdentityRole role = new IdentityRole
+                {
+                    Name = model.Name
+                };
+                await this.roleManager.CreateAsync(role);
+                return CreatedAtAction("GetRole", new { id = role.Id });
+            }
+            else
+                return UnprocessableEntity();
         }
 
         [Authorize(Roles = "Administrator")]

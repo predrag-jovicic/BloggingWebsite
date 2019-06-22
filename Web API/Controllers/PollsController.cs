@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.ViewModels.Input;
@@ -59,7 +60,7 @@ namespace Web_API.Controllers
         }
 
         // Get poll results
-        [HttpGet]
+        [HttpGet("results/{id}")]
         public IActionResult GetPollResults(int id)
         {
             return Ok(this.unitOfWork.PollsFetcher.GetPollResults(id));
@@ -67,7 +68,7 @@ namespace Web_API.Controllers
 
         [Authorize(Roles = "Blogger")]
         [HttpPost("attachpoll")]
-        public async Task<IActionResult> AttachExistingPollToPost(PollPostViewModel model)
+        public async Task<IActionResult> AttachExistingPollToPost([FromBody]PollPostViewModel model)
         {
             var poll = this.unitOfWork.PollsRepository.GetById(model.PollId);
             var post = this.unitOfWork.PostsRepository.GetById(model.PostId);
@@ -166,15 +167,21 @@ namespace Web_API.Controllers
             }
         }
 
-        [Route("remove/{postPollId}")]
+        [Route("remove")]
         [Authorize(Roles = "Blogger")]
         [HttpDelete]
-        public IActionResult RemovePollFromPost(int postPollId)
+        public IActionResult RemovePollFromPost([FromBody]RemovePollFromPostsViewModel model)
         {
-            var poll = this.unitOfWork.PollsRepository.GetPostPollById(postPollId);
-            if (poll == null)
+            var post = this.unitOfWork.PostsRepository.GetById(model.PostId);
+            if (post == null)
                 return BadRequest();
-            this.unitOfWork.PollsRepository.RemoveFromPost(poll);
+            if (post.UserId != User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value)
+                return Forbid();
+            var postPoll = this.unitOfWork.PollsRepository.GetPostPollById(model.PostPollId);
+            if (postPoll == null)
+                return BadRequest();
+            this.unitOfWork.PollsRepository.RemoveFromPost(postPoll);
+            this.unitOfWork.Save();
             return NoContent();
         }
     }

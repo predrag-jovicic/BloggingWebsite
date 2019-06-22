@@ -13,7 +13,7 @@ namespace Application.ViewModels.Input
         [FutureDateValidation]
         public DateTime? ActiveUntil { get; set; }
         public bool MultipleAnswers { get; set; }
-        [StringListValidation(@"^[\w\-\s\,\.\!]{3,20}$")]
+        [StringListValidation(@"^[\w\-\s\,\.\!]{2,20}$")]
         public List<string> Answers { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace Application.ValidationAttributes
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if (value == null)
+                return ValidationResult.Success;
             DateTime dateTime = (DateTime)value;
             if (dateTime != null)
             {
@@ -22,7 +24,7 @@ namespace Application.ValidationAttributes
                 }
             }
             else
-                return ValidationResult.Success;
+                return new ValidationResult(FormatErrorMessage("Date you entered is not valid."));
         }
     }
 }

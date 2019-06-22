@@ -55,7 +55,6 @@ namespace Web_API.Controllers
 
         [Authorize(Roles = "Blogger")]
         [HttpPost]
-        // to be continued
         public async Task<IActionResult> Post([FromBody]NewPostViewModel newPost)
         {
             if (ModelState.IsValid)
@@ -98,14 +97,13 @@ namespace Web_API.Controllers
         // Dummy calculation. It's not precise.
         private byte CalculateReadTime(string content)
         {
-            const short wordsPerMinute = 250;
+            const short charactersPerMinute = 250*6;
             double numberOfCharacters = content.Length * 1.0;
-            return (byte)Math.Ceiling(numberOfCharacters / wordsPerMinute);
+            return (byte)Math.Ceiling(numberOfCharacters / charactersPerMinute);
         }
 
         [Authorize(Roles = "Blogger")]
         [HttpPatch("{id}")]
-        //to be continued
         public async Task<IActionResult> Patch(long id, [FromBody]NewPostViewModel model)
         {
             if (ModelState.IsValid)
@@ -113,12 +111,14 @@ namespace Web_API.Controllers
                 var post = this.unitOfWork.PostsRepository.GetById(id);
                 if (post == null)
                     return NotFound();
+                if (post.UserId != User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value)
+                    return Forbid();
                 else
                 {
                     post.CategoryId = model.CategoryId;
                     post.Title = model.Title;
                     post.Text = model.Content;
-                    foreach(var tag in model.Tags)
+                    foreach (var tag in model.Tags)
                     {
                         var wantedTag = this.unitOfWork.TagsRepository.GetByName(tag);
                         if (wantedTag == null)
@@ -133,7 +133,7 @@ namespace Web_API.Controllers
                         }
                         else
                         {
-                            if(!this.unitOfWork.PostsRepository.HasTag(post.PostId, wantedTag.TagId))
+                            if (!this.unitOfWork.PostsRepository.HasTag(post.PostId, wantedTag.TagId))
                             {
                                 PostTag postTag = new PostTag { PostId = post.PostId, TagId = wantedTag.TagId };
                                 this.unitOfWork.PostsRepository.AddPostTag(postTag);

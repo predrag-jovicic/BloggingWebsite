@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.ViewModels.Input;
 using DataAccess;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,12 +37,15 @@ namespace Web_API.Controllers
             return Ok(photos);
         }
 
+        [Authorize(Roles = "Blogger")]
         [HttpPost]
         public async Task<IActionResult> Post(PhotosViewModel vm)
         {
             var post = this.unitOfWork.PostsRepository.GetById(vm.PostId);
             if (post == null)
                 return BadRequest("The post does not exist.");
+            if (post.UserId != User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value)
+                return Forbid();
             var numberOfFiles = vm.Files.Count;
             if (numberOfFiles > 8) {
                 ModelState.AddModelError("size", "Number of images can't exceed 8.");
@@ -85,17 +90,23 @@ namespace Web_API.Controllers
             return Created("PostPhotos",new { id = vm.PostId });
         }
 
+        [Authorize(Roles = "Blogger")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var postPhoto = this.unitOfWork.PostPhotosRepository.GetById(id);
             if (postPhoto == null)
                 return BadRequest();
+            var post = this.unitOfWork.PostsRepository.GetById(postPhoto.PostId);
+            if (post.UserId != User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value)
+                return Forbid();
             else
             {
-                if (System.IO.File.Exists(postPhoto.Source))
+                postPhoto.Source = postPhoto.Source.Substring(1);
+                var path = Path.Combine(this.hostingEnvironment.WebRootPath, postPhoto.Source);
+                if (System.IO.File.Exists(path))
                 {
-                    System.IO.File.Delete(postPhoto.Source);
+                    System.IO.File.Delete(path);
                 }
                 this.unitOfWork.PostPhotosRepository.Delete(postPhoto);
                 await this.unitOfWork.Save();
