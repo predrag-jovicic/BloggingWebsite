@@ -1,113 +1,27 @@
  <!-- Comments Start -->
- <div>
-    <h3 class="mb-5">6 Comments</h3>
-    <ul class="comment-list">
+ <div *ngIf='comments && comments.length; else elseblock'>
+    <h3 class="mb-5">X Comments</h3>
+    <ul class="comment-list" *ngFor='let comment of comments'>
       <li class="comment">
         <div class="vcard">
-          <img alt="Image placeholder">
+          <img *ngIf='comment.authorPhoto' [src]='comment.authorPhoto' alt="Image placeholder">
         </div>
         <div class="comment-body">
-          <h3>Jean Doe</h3>
-          <div class="meta">January 9, 2018 at 2:21pm</div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus,
-            ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum
-            impedit necessitatibus, nihil?</p>
+          <h3>{{comment.authorName}}</h3>
+          <div class="meta">{{comment.postedOn | date:'medium'}}</div>
+          <p>{{comment.text}}</p>
           <p>
-            <a href="#" class="reply rounded">Reply</a>
-          </p>
-        </div>
-      </li>
-
-      <li class="comment">
-        <div class="vcard">
-          <img alt="Image placeholder">
-        </div>
-        <div class="comment-body">
-          <h3>Jean Doe</h3>
-          <div class="meta">January 9, 2018 at 2:21pm</div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus,
-            ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum
-            impedit necessitatibus, nihil?</p>
-          <p>
-            <a href="#" class="reply rounded">Reply</a>
+            <a href="#" [attr.data-id]='comment.commentId' class="reply rounded">Reply</a>
           </p>
         </div>
 
-        <ul class="children">
-          <li class="comment">
-            <div class="vcard">
-              <img alt="Image placeholder">
-            </div>
-            <div class="comment-body">
-              <h3>Jean Doe</h3>
-              <div class="meta">January 9, 2018 at 2:21pm</div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus,
-                ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas
-                earum impedit necessitatibus, nihil?</p>
-              <p>
-                <a href="#" class="reply rounded">Reply</a>
-              </p>
-            </div>
-
-
-            <ul class="children">
-              <li class="comment">
-                <div class="vcard">
-                  <img alt="Image placeholder">
-                </div>
-                <div class="comment-body">
-                  <h3>Jean Doe</h3>
-                  <div class="meta">January 9, 2018 at 2:21pm</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus,
-                    ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas
-                    earum impedit necessitatibus, nihil?</p>
-                  <p>
-                    <a href="#" class="reply rounded">Reply</a>
-                  </p>
-                </div>
-
-                <ul class="children">
-                  <li class="comment">
-                    <div class="vcard">
-                      <img alt="Image placeholder">
-                    </div>
-                    <div class="comment-body">
-                      <h3>Jean Doe</h3>
-                      <div class="meta">January 9, 2018 at 2:21pm</div>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus,
-                        ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam
-                        voluptas earum impedit necessitatibus, nihil?</p>
-                      <p>
-                        <a href="#" class="reply rounded">Reply</a>
-                      </p>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-
-      <li class="comment">
-        <div class="vcard">
-          <img alt="Image placeholder">
-        </div>
-        <div class="comment-body">
-          <h3>Jean Doe</h3>
-          <div class="meta">January 9, 2018 at 2:21pm</div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus,
-            ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum
-            impedit necessitatibus, nihil?</p>
-          <p>
-            <a href="#" class="reply rounded">Reply</a>
-          </p>
-        </div>
+        <app-blog-comment [replies]='comment.replies'></app-blog-comment>
       </li>
     </ul>
     <!-- END comment-list -->
   </div>
   <!-- Comments End -->
+  <ng-template #elseblock><h5>There are no comments left on this post.</h5></ng-template>
 
   <!-- Post Comment Start -->
   <div id="comment" class="comment">

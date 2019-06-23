@@ -9,7 +9,7 @@ import { IPost } from './IPost';
   styleUrls: ['./blog-postdetails.component.css']
 })
 export class BlogPostdetailsComponent implements OnInit {
-  private post : IPost;
+  post : IPost;
   /* Fetch post data and display it. */
   constructor(private route: ActivatedRoute, private postsService : PostsService) { }
 

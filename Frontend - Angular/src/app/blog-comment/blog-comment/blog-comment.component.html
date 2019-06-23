@@ -1,0 +1,17 @@
+<ul class="children" *ngIf='replies'>
+  <li class="comment" *ngFor='let reply of replies'>
+    <div class="vcard">
+      <img *ngIf='reply.authorPhoto' [src]='reply.authorPhoto' alt="Image placeholder">
+    </div>
+    <div class="comment-body">
+      <h3>{{reply.authorName}}</h3>
+      <div class="meta">{{reply.postedOn | date:'medium'}}</div>
+      <p>{{reply.text}}</p>
+      <p>
+        <a href="#" [attr.data-id]='reply.commentId' class="reply rounded">Reply</a>
+      </p>
+    </div>
+
+    <app-blog-comment [replies]='reply.replies'></app-blog-comment>
+  </li>
+</ul>

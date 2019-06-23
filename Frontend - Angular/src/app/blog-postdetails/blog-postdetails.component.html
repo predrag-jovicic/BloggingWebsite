@@ -1,4 +1,4 @@
-<div class="col-md-12 blog-post">
+<div *ngIf='post' class="col-md-12 blog-post">
 
 
   <!-- Post Headline Start -->
@@ -63,5 +63,5 @@
   <!-- Post Author Bio Box End -->
 
   <app-blog-recommendedposts></app-blog-recommendedposts>
-  <app-blog-comments></app-blog-comments>
+  <app-blog-comments [postId]='post.postId'></app-blog-comments>
 </div>

@@ -13,6 +13,7 @@ import { BlogCreatepostComponent } from './blog-createpost/blog-createpost.compo
 import { NotFoundPageComponentComponent } from './not-found-page-component/not-found-page-component.component';
 import { BlogCommentsComponent } from './blog-comments/blog-comments.component';
 import { BlogRecommendedpostsComponent } from './blog-recommendedposts/blog-recommendedposts.component';
+import { BlogCommentComponent } from './blog-comment/blog-comment/blog-comment.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BlogRecommendedpostsComponent } from './blog-recommendedposts/blog-reco
     BlogCreatepostComponent,
     NotFoundPageComponentComponent,
     BlogCommentsComponent,
-    BlogRecommendedpostsComponent
+    BlogRecommendedpostsComponent,
+    BlogCommentComponent
   ],
   imports: [
     BrowserModule,
