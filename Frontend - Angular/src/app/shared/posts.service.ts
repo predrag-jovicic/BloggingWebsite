@@ -13,6 +13,9 @@ export class PostsService {
   private recentPostsByTagSource = new Subject<IRecentPost[]>();
   recentPostsByTag$ = this.recentPostsByTagSource.asObservable();
 
+  private recentPostsByCategorySource = new Subject<IRecentPost[]>();
+  recentPostsByCategory$ = this.recentPostsByCategorySource.asObservable();
+
   constructor(private httpClient : HttpClient) { }
 
   getRecentPosts() : Observable<IRecentPost[]>{
@@ -27,7 +30,15 @@ export class PostsService {
     return this.httpClient.get<IRecentPost[]>(this.url + "/postspreview?tag=" + id);
   }
 
+  getRecentPostsByCategory(id:number) : Observable<IRecentPost[]>{
+    return this.httpClient.get<IRecentPost[]>(this.url + "/postspreview?category=" + id);
+  }
+
   invokeGetRecentPostsByTag(id){
     this.getRecentPostsByTag(id).subscribe(posts => this.recentPostsByTagSource.next(posts));
+  }
+
+  invokeGetRecentPostsByCategory(id){
+    this.getRecentPostsByCategory(id).subscribe(posts => this.recentPostsByCategorySource.next(posts));
   }
 }

@@ -1,5 +1,6 @@
+import { PostsService } from './../shared/posts.service';
 import { CategoriesService } from './../shared/categories.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ICategory } from './iCategory';
 
 @Component({
@@ -8,10 +9,10 @@ import { ICategory } from './iCategory';
   styleUrls: ['./blog-categories.component.css']
 })
 export class BlogCategoriesComponent implements OnInit {
-  getCategoriesService : CategoriesService;
+  private getCategoriesService : CategoriesService;
   categories : ICategory[];
-
-  constructor(getCategoriesService : CategoriesService) {
+  @Output() categorySelected = new EventEmitter<string>();
+  constructor(getCategoriesService : CategoriesService, private postsService : PostsService) {
     this.getCategoriesService = getCategoriesService;
   }
 
@@ -20,7 +21,8 @@ export class BlogCategoriesComponent implements OnInit {
   }
 
   onClick($event){
-    console.log($event.target.getAttribute("data-id"));
+    this.postsService.invokeGetRecentPostsByCategory($event.target.getAttribute("data-id"));
+    this.categorySelected.emit();
   }
 
 }

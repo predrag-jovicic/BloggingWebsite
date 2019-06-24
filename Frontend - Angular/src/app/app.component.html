@@ -26,11 +26,11 @@
           <div class="my-detail">
             <h3>Categories</h3>
 
-            <app-blog-categories></app-blog-categories>
+            <app-blog-categories (categorySelected)='onFilterSelected()'></app-blog-categories>
 
             <h3>Popular tags</h3>
 
-            <app-blog-populartags (tagSelected)='onTagSelected()'></app-blog-populartags>
+            <app-blog-populartags (tagSelected)='onFilterSelected()'></app-blog-populartags>
             
           </div>
         </div>

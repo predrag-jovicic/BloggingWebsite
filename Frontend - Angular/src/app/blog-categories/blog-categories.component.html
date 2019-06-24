@@ -1,7 +1,7 @@
 <ul class="categories" *ngIf="categories && categories.length">
   <li *ngFor="let category of categories">
-    <a href="#">{{category.name}}
-      <span (click)="onClick($event)" [attr.data-id]="category.categoryId"></span>
+    <a href="#" (click)="onClick($event)" [attr.data-id]="category.categoryId">{{category.name}}
+      <span ></span>
     </a>
   </li>
 </ul>

@@ -18,7 +18,7 @@ export class AppComponent {
     this.visible = !this.visible;
   }
 
-  onTagSelected(){
+  onFilterSelected(){
     this.router.navigate(['']);
   }
 
