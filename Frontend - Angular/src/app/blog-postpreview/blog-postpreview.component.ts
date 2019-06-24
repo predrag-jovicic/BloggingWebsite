@@ -16,6 +16,7 @@ export class BlogPostpreviewComponent implements OnInit {
 
   ngOnInit() {
     this.postService.getRecentPosts().subscribe(posts => this.recentPosts = posts);
+    this.postService.recentPostsByTag$.subscribe(posts => this.recentPosts = posts);
   }
 
 }

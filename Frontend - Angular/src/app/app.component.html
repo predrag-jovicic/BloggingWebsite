@@ -30,7 +30,7 @@
 
             <h3>Popular tags</h3>
 
-            <app-blog-populartags></app-blog-populartags>
+            <app-blog-populartags (tagSelected)='onTagSelected()'></app-blog-populartags>
             
           </div>
         </div>
@@ -49,7 +49,7 @@
             <div class="sub-title">
                 <h2><a routerLink="/">My Blog</a></h2>
               <a href="contact.html">
-                <i class="icon-envelope"></i>
+                <i class="icon-user"></i>
               </a>
               <a routerLink="/createpost">
                 <i class="icon-pencil"></i>
@@ -98,7 +98,7 @@
 
             <!-- UiPasta Credit Start -->
             <div class="uipasta-credit">Design By
-              <a href="http://www.uipasta.com" target="_blank">UiPasta</a>
+              <a href="http://www.uipasta.com" target="_blank">UiPasta</a>. Modified by Predrag Jovicic.
             </div>
             <!-- UiPasta Credit End -->
 

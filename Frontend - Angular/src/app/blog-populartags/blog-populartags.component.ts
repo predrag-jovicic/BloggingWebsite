@@ -1,5 +1,6 @@
+import { PostsService } from './../shared/posts.service';
 import { TagsService } from './../shared/tags.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ITag } from './iTag';
 
 @Component({
@@ -10,7 +11,8 @@ import { ITag } from './iTag';
 export class BlogPopulartagsComponent implements OnInit {
   private getPopularTagsService : TagsService;
   popularTags : ITag[];
-  constructor(getPopularTagsService : TagsService ) {
+  @Output() tagSelected = new EventEmitter<string>();
+  constructor(getPopularTagsService : TagsService, private postsService : PostsService) {
     this.getPopularTagsService = getPopularTagsService;
   }
 
@@ -19,7 +21,8 @@ export class BlogPopulartagsComponent implements OnInit {
   }
 
   onClick($event){
-    console.log($event.target.getAttribute("data-id"));
+    this.postsService.invokeGetRecentPostsByTag($event.target.getAttribute("data-id"));
+    this.tagSelected.emit();
   }
 
 }
