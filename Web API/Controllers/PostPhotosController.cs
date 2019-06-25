@@ -69,9 +69,8 @@ namespace Web_API.Controllers
                     string currentFileName = file.FileName.Trim('"');
                     string fileExtension = Path.GetExtension(currentFileName);
                     string newFileName = Guid.NewGuid().ToString() + fileExtension;
-                    string semiPath = $@"images\posts\{newFileName}";
-                    string filePath = Path.Combine(this.hostingEnvironment.WebRootPath, semiPath);
-                    string dbPath = $"/images/posts/{newFileName}";
+                    string filePath = Path.Combine(this.hostingEnvironment.WebRootPath, "images", "posts", newFileName);
+                    string dbPath = Path.Combine("images", "posts", newFileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         file.CopyTo(stream);
