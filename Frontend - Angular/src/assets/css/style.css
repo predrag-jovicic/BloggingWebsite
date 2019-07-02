@@ -345,6 +345,7 @@ button {
 }
 .invalid-feedback{
     color: #cd5360 !important;
+    margin-top:0.15rem;
 }
 
 .categories li a, .sidelink li a {

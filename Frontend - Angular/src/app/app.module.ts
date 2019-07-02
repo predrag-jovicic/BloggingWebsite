@@ -14,6 +14,8 @@ import { NotFoundPageComponentComponent } from './not-found-page-component/not-f
 import { BlogCommentsComponent } from './blog-comments/blog-comments.component';
 import { BlogRecommendedpostsComponent } from './blog-recommendedposts/blog-recommendedposts.component';
 import { BlogCommentComponent } from './blog-comment/blog-comment/blog-comment.component';
+import { BlogLoginComponent } from './blog-login/blog-login.component';
+import { BlogRegisterComponent } from './blog-register/blog-register.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { BlogCommentComponent } from './blog-comment/blog-comment/blog-comment.c
     NotFoundPageComponentComponent,
     BlogCommentsComponent,
     BlogRecommendedpostsComponent,
-    BlogCommentComponent
+    BlogCommentComponent,
+    BlogLoginComponent,
+    BlogRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +38,8 @@ import { BlogCommentComponent } from './blog-comment/blog-comment/blog-comment.c
       { path: '', component: BlogPostpreviewComponent},
       { path: 'postdetails/:id', component: BlogPostdetailsComponent},
       { path: 'createpost', component: BlogCreatepostComponent},
+      { path: 'login', component: BlogLoginComponent},
+      { path: 'register',component:BlogRegisterComponent},
       { path: '**', component: NotFoundPageComponentComponent}
     ]),
     ReactiveFormsModule,

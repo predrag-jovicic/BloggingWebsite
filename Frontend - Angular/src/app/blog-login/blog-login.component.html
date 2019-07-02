@@ -1,0 +1,21 @@
+<h2>Log in</h2>
+<form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <input [ngClass]="{'is-invalid' : loginForm.get('username').touched && loginForm.get('username').errors}" type="text" id="username" formControlName="username" class="form-control" placeholder="Username">
+        <span *ngIf="loginForm.get('username').errors && loginForm.get('username').touched" class="invalid-feedback" class="invalid-feedback">Incorrect format</span>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <input [ngClass]="{'is-invalid' : loginForm.get('password').touched && loginForm.get('password').errors}" type="password" id="password" formControlName="password" class="form-control" placeholder="Password">
+        <span class="invalid-feedback" *ngIf="loginForm.get('password').errors && loginForm.get('password').touched" class="invalid-feedback">Incorrect format</span>
+      </div>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="load-more-button">Log in</button>
+    </div>
+  </div>
+</form>
+<p>If you don't have an account, please <a routerLink="/register">register</a>!</p>
