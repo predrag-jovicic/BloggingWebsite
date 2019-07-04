@@ -22,6 +22,7 @@ export class BlogCreatepostComponent implements OnInit {
   onSubmit(){
     if(!this.newPostForm.valid){
       alert("You cannot submit the form because your data is not valid.");
+      return;
     }
     else{
       console.log(this.newPostForm);

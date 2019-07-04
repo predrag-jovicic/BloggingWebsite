@@ -1,3 +1,4 @@
+import { AuthenticationserviceService } from './shared/authenticationservice.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -10,7 +11,7 @@ export class AppComponent {
   title = 'BloggingSpaApp';
   visible=false;
 
-  constructor(private router:Router){
+  constructor(private router:Router, private authService : AuthenticationserviceService){
     
   }
 
@@ -19,6 +20,11 @@ export class AppComponent {
   }
 
   onFilterSelected(){
+    this.router.navigate(['']);
+  }
+
+  signOut(){
+    this.authService.logOut();
     this.router.navigate(['']);
   }
 

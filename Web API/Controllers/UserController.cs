@@ -85,7 +85,7 @@ namespace Web_API.Controllers
         }
 
         // This method is invoked by a SignIn method
-        private IActionResult GetToken(ClaimsIdentity claimsIdentity)
+        private string GetToken(ClaimsIdentity claimsIdentity)
         {
             var configReference = configuration.GetSection("JWT");
             var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configReference["BaseKey"]));
@@ -99,7 +99,7 @@ namespace Web_API.Controllers
                 Subject = claimsIdentity,
                 IssuedAt = DateTime.Now
                 });
-            return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         [Route("register")]
@@ -171,7 +171,13 @@ namespace Web_API.Controllers
                             new Claim(ClaimTypes.Role,role)
                         };
                         ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,"jwt");
-                        return this.GetToken(claimsIdentity);
+                        var output = new AuthUserViewModel
+                        {
+                            User = model.Username,
+                            Role = role,
+                            Token = this.GetToken(claimsIdentity)
+                        };
+                        return Ok(output);
                     }
                     else
                     {
@@ -181,7 +187,7 @@ namespace Web_API.Controllers
                 }
                 else
                 {
-                    return NotFound();
+                    return NotFound("A user with this credentials does not exist.");
                 }
             }
             else

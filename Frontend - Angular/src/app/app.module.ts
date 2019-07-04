@@ -16,6 +16,7 @@ import { BlogRecommendedpostsComponent } from './blog-recommendedposts/blog-reco
 import { BlogCommentComponent } from './blog-comment/blog-comment/blog-comment.component';
 import { BlogLoginComponent } from './blog-login/blog-login.component';
 import { BlogRegisterComponent } from './blog-register/blog-register.component';
+import { AuthguardService } from './shared/AuthguardService';
 
 @NgModule({
   declarations: [
@@ -35,9 +36,9 @@ import { BlogRegisterComponent } from './blog-register/blog-register.component';
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      { path: '', component: BlogPostpreviewComponent},
+      { path: '', component: BlogPostpreviewComponent },
       { path: 'postdetails/:id', component: BlogPostdetailsComponent},
-      { path: 'createpost', component: BlogCreatepostComponent},
+      { path: 'createpost', component: BlogCreatepostComponent, canActivate : [AuthguardService], data : {roles:["Blogger"]}},
       { path: 'login', component: BlogLoginComponent},
       { path: 'register',component:BlogRegisterComponent},
       { path: '**', component: NotFoundPageComponentComponent}

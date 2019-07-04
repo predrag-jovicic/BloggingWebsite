@@ -48,8 +48,11 @@
 
             <div class="sub-title">
                 <h2><a routerLink="/">My Blog</a></h2>
-              <a routerLink="/login">
+              <a *ngIf='this.authService.currentUser == null' routerLink="/login">
                 <i class="icon-user"></i>
+              </a>
+              <a *ngIf='this.authService.currentUser'>
+                <a (click)="signOut()">Log out</a>
               </a>
               <a routerLink="/createpost">
                 <i class="icon-pencil"></i>

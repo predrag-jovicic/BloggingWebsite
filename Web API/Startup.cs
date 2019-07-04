@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,10 @@ namespace Web_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options => options.AddPolicy("MyCORSPolicy",builder => builder.WithOrigins("http://localhost:4200")));
+            services.AddCors(options => options.AddPolicy("MyCORSPolicy",builder => {
+                builder.WithOrigins("http://localhost:4200")
+                .AllowAnyMethod().AllowAnyHeader();
+            }));
             services.AddDbContext<BlogDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<BlogDbContext>();
             services.AddAuthentication(options =>
