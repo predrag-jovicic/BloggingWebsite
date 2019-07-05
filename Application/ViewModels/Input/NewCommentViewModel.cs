@@ -9,9 +9,6 @@ namespace Application.ViewModels.Input
     {
         [RegularExpression("[A-z][\\w\\s]{2,30}")]
         public string Name { get; set; }
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
         [DataType(DataType.MultilineText)]
         [Required]
         public string Content { get; set; }

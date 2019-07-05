@@ -52,7 +52,7 @@
                 <i class="icon-user"></i>
               </a>
               <a *ngIf='this.authService.currentUser'>
-                <a (click)="signOut()">Log out</a>
+                <i class="glyphicon glyphicon-log-out" (click)="signOut()"></i>
               </a>
               <a routerLink="/createpost">
                 <i class="icon-pencil"></i>

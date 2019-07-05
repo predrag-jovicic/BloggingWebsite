@@ -97,7 +97,7 @@ namespace Web_API.Controllers
                 }
                 this.unitOfWork.CommentsRepository.Add(newComment);
                 await this.unitOfWork.Save();
-                return CreatedAtAction("CommentPost", new { id = newComment.CommentId });
+                return CreatedAtAction("Post", new { id = newComment.CommentId });
             }
             else
             {

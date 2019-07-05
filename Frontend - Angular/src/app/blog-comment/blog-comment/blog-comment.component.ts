@@ -1,5 +1,6 @@
 import { IComment } from './../../blog-comments/IComment';
 import { Component, OnInit, Input } from '@angular/core';
+import { CommentcommunicationService } from 'src/app/shared/commentcommunication.service';
 
 @Component({
   selector: 'app-blog-comment',
@@ -10,9 +11,12 @@ export class BlogCommentComponent implements OnInit {
 
   @Input() replies : IComment[];
 
-  constructor() { }
+  constructor(private commentCommunicationService : CommentcommunicationService) { }
 
   ngOnInit() {
   }
 
+  replyCommentSelected($event){
+    this.commentCommunicationService.raiseEvent($event.target.getAttribute("data-id"));
+  }
 }

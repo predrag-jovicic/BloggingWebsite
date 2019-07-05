@@ -8,7 +8,7 @@
       <div class="meta">{{reply.postedOn | date:'medium'}}</div>
       <p>{{reply.text}}</p>
       <p>
-        <a href="#" [attr.data-id]='reply.commentId' class="reply rounded">Reply</a>
+        <a [attr.data-id]='reply.commentId' (click)='replyCommentSelected($event)' class="reply rounded">Reply</a>
       </p>
     </div>
 
