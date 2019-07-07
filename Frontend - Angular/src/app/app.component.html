@@ -5,9 +5,7 @@
 <!-- Preloader End -->
 
 
-
-
-<div id="main">
+<div id="main" @fade>
   <div class="container">
     <div class="row">
 
@@ -64,7 +62,7 @@
                 <i class="icon-magnifier"></i>
               </a>
               <div *ngIf='visible'>
-                  <input type="search" (keyup.enter)='onEnterKey($event)' class="form-control search" id="search"/>
+                  <input type="search" (keyup.enter)='onEnterKey($event)' class="form-control search" id="search" @extend/>
               </div>
             </div>
 

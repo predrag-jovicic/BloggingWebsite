@@ -2,11 +2,26 @@ import { AuthenticationserviceService } from './../shared/authenticationservice.
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-blog-login',
   templateUrl: './blog-login.component.html',
-  styleUrls: ['./blog-login.component.css']
+  styleUrls: ['./blog-login.component.css'],
+  animations: [
+    trigger('slide',[
+      transition("void => *",[
+        style({transform:'translateX(35px)',opacity:0}),
+        animate('0.6s')
+      ])
+    ]),
+    trigger('scale',[
+      transition("void => *",[
+        style({transform:'scale(0.5)'}),
+        animate('0.6s')
+      ])
+    ])
+  ]
 })
 export class BlogLoginComponent implements OnInit {
 

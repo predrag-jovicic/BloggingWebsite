@@ -1,10 +1,19 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-blog-register',
   templateUrl: './blog-register.component.html',
-  styleUrls: ['./blog-register.component.css']
+  styleUrls: ['./blog-register.component.css'],
+  animations : [
+    trigger('slideUp',[
+      transition("void => *",[
+        style({transform:'translateY(35px)',opacity:0}),
+        animate('0.6s')
+      ])
+    ])
+  ]
 })
 export class BlogRegisterComponent implements OnInit {
   registerForm : FormGroup;

@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { BlogCategoriesComponent } from './blog-categories/blog-categories.component';
@@ -48,7 +49,8 @@ import { BlogModeratorpanelComponent } from './blog-moderatorpanel/blog-moderato
       { path: '**', component: NotFoundPageComponentComponent}
     ]),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

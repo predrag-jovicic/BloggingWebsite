@@ -1,5 +1,5 @@
 <div *ngIf='recentPosts && recentPosts.length; else elseBlock'>
-  <div *ngFor='let post of recentPosts' class="col-md-12 blog-post">
+  <div *ngFor='let post of recentPosts' class="col-md-12 blog-post" @scale>
     <div class="post-title">
       <a [routerLink]="['/postdetails',post.postId]">
         <h1>{{post.title}}</h1>

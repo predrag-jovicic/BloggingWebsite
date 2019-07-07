@@ -2,14 +2,14 @@
 
 
   <!-- Post Headline Start -->
-  <div class="post-title">
+  <div class="post-title" @slideLeft>
     <h1>{{post.title}}</h1>
   </div>
   <!-- Post Headline End -->
 
 
   <!-- Post Detail Start -->
-  <div class="post-info">
+  <div class="post-info" @slideLeft>
     <span>{{post.postedOn | date}} / by
       <a href="#" target="_blank">{{post.authorFirstName}} {{post.authorFirstName}}</a>
     </span>
@@ -17,10 +17,10 @@
   <!-- Post Detail End -->
 
 
-  <p id="post-content">{{post.text}}</p>
+  <p id="post-content" @slideUp>{{post.text}}</p>
 
   <!-- Post Author Bio Box Start -->
-  <div class="about-author margin-top-70 margin-bottom-50">
+  <div class="about-author margin-top-70 margin-bottom-50" @slideUp>
 
     <div class="picture">
       <img src="images/blog/author.png" class="img-responsive" alt="">
