@@ -34,7 +34,7 @@ export class BlogModeratorpanelComponent implements OnInit {
     let comment = $event.target;
     let confirmation = confirm('Do you really want to delete this comment');
     if(confirmation){
-      this.commentService.approveComment(comment.getAttribute('data-id')).subscribe(
+      this.commentService.deleteComment(comment.getAttribute('data-id')).subscribe(
         result => { alert("The comment has been deleted."); comment.parentNode.parentNode.remove(); },
         error => alert(error.textStatus)
       );
