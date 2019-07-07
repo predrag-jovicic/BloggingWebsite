@@ -26,11 +26,11 @@
           <div class="my-detail">
             <h3>Categories</h3>
 
-            <app-blog-categories (categorySelected)='onFilterSelected()'></app-blog-categories>
+            <app-blog-categories></app-blog-categories>
 
             <h3>Popular tags</h3>
 
-            <app-blog-populartags (tagSelected)='onFilterSelected()'></app-blog-populartags>
+            <app-blog-populartags></app-blog-populartags>
             
           </div>
         </div>
@@ -47,7 +47,7 @@
           <div class="row">
 
             <div class="sub-title">
-                <h2><a routerLink="/">My Blog</a></h2>
+                <h2><a routerLink="/home">My Blog</a></h2>
               <a *ngIf='this.authService.currentUser == null' routerLink="/login">
                 <i class="icon-user"></i>
               </a>
@@ -61,7 +61,7 @@
                 <i class="icon-magnifier"></i>
               </a>
               <div *ngIf='visible'>
-                  <input type="search" class="form-control search" id="search"/>
+                  <input type="search" (keyup.enter)='onEnterKey($event)' class="form-control search" id="search"/>
               </div>
             </div>
 

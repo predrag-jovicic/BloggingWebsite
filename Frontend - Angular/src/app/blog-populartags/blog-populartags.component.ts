@@ -2,6 +2,7 @@ import { PostsService } from './../shared/posts.service';
 import { TagsService } from './../shared/tags.service';
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ITag } from './iTag';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-blog-populartags',
@@ -12,7 +13,7 @@ export class BlogPopulartagsComponent implements OnInit {
   private getPopularTagsService : TagsService;
   popularTags : ITag[];
   @Output() tagSelected = new EventEmitter<string>();
-  constructor(getPopularTagsService : TagsService, private postsService : PostsService) {
+  constructor(getPopularTagsService : TagsService, private postsService : PostsService, private router : Router) {
     this.getPopularTagsService = getPopularTagsService;
   }
 
@@ -21,8 +22,12 @@ export class BlogPopulartagsComponent implements OnInit {
   }
 
   onClick($event){
-    this.postsService.invokeGetRecentPostsByTag($event.target.getAttribute("data-id"));
-    this.tagSelected.emit();
+    let navigationExtras: NavigationExtras = { 
+      queryParams: { 'tag': $event.target.getAttribute("data-id")},
+      queryParamsHandling: "merge"
+    };
+    this.router.navigate(['/home'],navigationExtras);
+    return false;
   }
 
 }

@@ -32,7 +32,7 @@ export class BlogLoginComponent implements OnInit {
       };
       this.authService.logIn(user).subscribe(result => {
           localStorage.setItem('loggedUser',JSON.stringify(result.body));
-          this.router.navigate(['']);
+          this.router.navigate(['/home']);
       }, error => {
         alert(error.statusText);
       });

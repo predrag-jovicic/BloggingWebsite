@@ -2,6 +2,7 @@ import { PostsService } from './../shared/posts.service';
 import { CategoriesService } from './../shared/categories.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ICategory } from './iCategory';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-categories',
@@ -12,7 +13,7 @@ export class BlogCategoriesComponent implements OnInit {
   private getCategoriesService : CategoriesService;
   categories : ICategory[];
   @Output() categorySelected = new EventEmitter<string>();
-  constructor(getCategoriesService : CategoriesService, private postsService : PostsService) {
+  constructor(getCategoriesService : CategoriesService, private postsService : PostsService, private router : Router) {
     this.getCategoriesService = getCategoriesService;
   }
 
@@ -21,8 +22,12 @@ export class BlogCategoriesComponent implements OnInit {
   }
 
   onClick($event){
-    this.postsService.invokeGetRecentPostsByCategory($event.target.getAttribute("data-id"));
-    this.categorySelected.emit();
+    let navigationExtras: NavigationExtras = { 
+      queryParams: { 'category': $event.target.getAttribute("data-id")},
+      queryParamsHandling: "merge"
+    };
+    this.router.navigate(['/home'],navigationExtras);
+    return false;
   }
 
 }

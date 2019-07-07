@@ -29,16 +29,16 @@
       <form (submit)="onSubmit()" class="p-5 bg-light" [formGroup]="commentFormGroup">
         <div *ngIf='this.authService.currentUser == null' class="form-group">
           <label for="name">Name</label>
-          <input required type="text" formControlName="name" [ngClass]="{'is-invalid' : commentFormGroup.get('name').dirty && commentFormGroup.get('name').errors}" class="form-control" id="name">
-          <span *ngIf="commentFormGroup.get('name').errors && commentFormGroup.get('name').dirty" class="invalid-feedback">Incorrect format</span>
+          <input required type="text" formControlName="name" [ngClass]="{'is-invalid' : commentFormGroup.get('name').touched && commentFormGroup.get('name').errors}" class="form-control" id="name">
+          <span *ngIf="commentFormGroup.get('name').errors && commentFormGroup.get('name').touched" class="invalid-feedback">Incorrect format</span>
         </div>
         <div *ngIf='this.authService.currentUser' class="form-group">
             <label for="name">Commenting as {{this.authService.currentUser.user}}. Your username will be visible next to a comment.</label>
         </div>
         <div class="form-group">
           <label for="message">Message</label>
-          <textarea required formControlName="message" id="message" cols="30" rows="10" [ngClass]="{'is-invalid' : commentFormGroup.get('message').dirty && commentFormGroup.get('message').errors}" class="form-control"></textarea>
-          <span *ngIf="commentFormGroup.get('message').errors && commentFormGroup.get('message').dirty" class="invalid-feedback">Incorrect format</span>
+          <textarea required formControlName="message" id="message" cols="30" rows="10" [ngClass]="{'is-invalid' : commentFormGroup.get('message').touched && commentFormGroup.get('message').errors}" class="form-control"></textarea>
+          <span *ngIf="commentFormGroup.get('message').errors && commentFormGroup.get('message').touched" class="invalid-feedback">Incorrect format</span>
         </div>
         <div class="form-group">
           <button [disabled]='!commentFormGroup.valid' type="submit" class="load-more-button">Post</button>

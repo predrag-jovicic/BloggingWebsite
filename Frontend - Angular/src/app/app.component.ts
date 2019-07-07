@@ -1,6 +1,6 @@
 import { AuthenticationserviceService } from './shared/authenticationservice.service';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -19,13 +19,17 @@ export class AppComponent {
     this.visible = !this.visible;
   }
 
-  onFilterSelected(){
-    this.router.navigate(['']);
+  onEnterKey($event){
+    let navigationExtras: NavigationExtras = { 
+      queryParams: { 'searchQuery': $event.target.value},
+      queryParamsHandling: "merge"
+    };
+    this.router.navigate(['/home'],navigationExtras);
   }
 
   signOut(){
     this.authService.logOut();
-    this.router.navigate(['']);
+    this.router.navigate(['/home']);
   }
 
 }

@@ -37,6 +37,7 @@ import { AuthguardService } from './shared/AuthguardService';
     BrowserModule,
     RouterModule.forRoot([
       { path: '', component: BlogPostpreviewComponent },
+      { path: 'home', component: BlogPostpreviewComponent },
       { path: 'postdetails/:id', component: BlogPostdetailsComponent},
       { path: 'createpost', component: BlogCreatepostComponent, canActivate : [AuthguardService], data : {roles:["Blogger"]}},
       { path: 'login', component: BlogLoginComponent},

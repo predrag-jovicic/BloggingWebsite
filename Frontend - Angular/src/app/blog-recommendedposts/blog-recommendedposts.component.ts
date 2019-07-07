@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { PostsService } from './../shared/posts.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { IRecommendedPost } from './IRecommendedPost';
 
 @Component({
   selector: 'app-blog-recommendedposts',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlogRecommendedpostsComponent implements OnInit {
 
-  constructor() { }
+  recommendations : IRecommendedPost[];
+  @Input() postId : number;
+  constructor(private postService : PostsService) { }
 
   ngOnInit() {
+    this.postService.getPostRecommendations(this.postId).subscribe(
+      posts => this.recommendations = posts
+    );
   }
 
 }

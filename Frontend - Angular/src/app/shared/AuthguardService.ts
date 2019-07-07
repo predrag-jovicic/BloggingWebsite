@@ -14,7 +14,7 @@ export class AuthguardService implements CanActivate {
     else{
         if(route.data.roles && route.data.roles.indexOf(currentUser.role)===-1){
             alert("You don't have a permission to access this page.");
-            this.router.navigate(['']);
+            this.router.navigate(['/home']);
             return false;
         }
         return true;
