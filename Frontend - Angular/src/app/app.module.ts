@@ -17,6 +17,7 @@ import { BlogCommentComponent } from './blog-comment/blog-comment/blog-comment.c
 import { BlogLoginComponent } from './blog-login/blog-login.component';
 import { BlogRegisterComponent } from './blog-register/blog-register.component';
 import { AuthguardService } from './shared/AuthguardService';
+import { BlogModeratorpanelComponent } from './blog-moderatorpanel/blog-moderatorpanel.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuthguardService } from './shared/AuthguardService';
     BlogRecommendedpostsComponent,
     BlogCommentComponent,
     BlogLoginComponent,
-    BlogRegisterComponent
+    BlogRegisterComponent,
+    BlogModeratorpanelComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,7 @@ import { AuthguardService } from './shared/AuthguardService';
       { path: 'createpost', component: BlogCreatepostComponent, canActivate : [AuthguardService], data : {roles:["Blogger"]}},
       { path: 'login', component: BlogLoginComponent},
       { path: 'register',component:BlogRegisterComponent},
+      { path: 'moderator-panel',component:BlogModeratorpanelComponent, canActivate : [AuthguardService],data:{roles:["Moderator"]}},
       { path: '**', component: NotFoundPageComponentComponent}
     ]),
     ReactiveFormsModule,

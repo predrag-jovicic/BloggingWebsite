@@ -54,8 +54,11 @@
               <a *ngIf='this.authService.currentUser'>
                 <i class="glyphicon glyphicon-log-out" (click)="signOut()"></i>
               </a>
-              <a routerLink="/createpost">
+              <a *ngIf='this.authService.currentUser && this.authService.currentUser.role == "Blogger"' routerLink="/createpost">
                 <i class="icon-pencil"></i>
+              </a>
+              <a *ngIf='this.authService.currentUser && this.authService.currentUser.role == "Moderator"' routerLink="/moderator-panel">
+                <i class="glyphicon glyphicon-list-alt"></i>
               </a>
               <a (click)="onClick()">
                 <i class="icon-magnifier"></i>

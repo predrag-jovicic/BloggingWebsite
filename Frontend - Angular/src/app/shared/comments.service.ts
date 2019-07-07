@@ -28,4 +28,33 @@ export class CommentsService {
       return this.httpClient.post(this.url,newComment);
     }
   }
+
+  getUnApprovedComments(){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.authService.currentUser.token}`
+      })
+    };
+    return this.httpClient.get<IComment[]>(this.url + 'unapproved',httpOptions);
+  }
+
+  approveComment(id){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.authService.currentUser.token}`
+      })
+    };
+    return this.httpClient.patch(this.url + 'approve/' + id,id,httpOptions);
+  }
+
+  deleteComment(id){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.authService.currentUser.token}`
+      })
+    };
+    return this.httpClient.delete(this.url + id,httpOptions);
+  }
 }
+
+
