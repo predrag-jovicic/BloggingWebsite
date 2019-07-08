@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { slide } from '../shared/Animations/slide';
+import { scale } from '../shared/Animations/scale';
 @Component({
   selector: 'app-blog-createpost',
   templateUrl: './blog-createpost.component.html',
-  styleUrls: ['./blog-createpost.component.css']
+  styleUrls: ['./blog-createpost.component.css'],
+  animations: [
+    slide,
+    scale
+  ]
 })
 export class BlogCreatepostComponent implements OnInit {
   newPostForm : FormGroup;

@@ -5,7 +5,7 @@
     <th>Comment</th>
     <th>Time</th>
   </tr>
-  <tr *ngFor='let comment of unapprovedComments'>
+  <tr *ngFor='let comment of unapprovedComments' @reveal>
     <td>{{comment.authorName}}</td>
     <td>{{comment.text}}</td>
     <td>{{comment.postedOn | date : 'medium'}}</td>

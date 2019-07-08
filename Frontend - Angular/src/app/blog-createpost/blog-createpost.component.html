@@ -1,41 +1,10 @@
 <div class="col-md-12 blog-post">
   <!-- Contact Me Start -->
-  <div class="post-title margin-top-70">
+  <div class="post-title">
     <h1>New
       <span class="main-color">post</span>
     </h1>
   </div>
-
-
-  <div class="row">
-
-    <div class="col-md-4 col-sm-4">
-      <div class="contact-us-detail">
-        <i class="icon-screen-smartphone color-6"></i>
-        <p>
-          <a href="tel:+1234567890">+1234 567 890</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="col-md-4 col-sm-4">
-      <div class="contact-us-detail">
-        <i class="icon-envelope-open color-5"></i>
-        <p>
-          <a href="mailto:name@domain.com">name@domain.com</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="col-md-4 col-sm-4">
-      <div class="contact-us-detail">
-        <i class="icon-clock color-3"></i>
-        <p>Mon - Fri 09:00 – 18:00</p>
-      </div>
-    </div>
-
-  </div>
-
 
   <div class="row margin-top-30">
     <div class="col-md-12">
@@ -43,14 +12,14 @@
       <div class="row">
         <form (ngSubmit)="onSubmit()" [formGroup] ="newPostForm">
 
-          <div class="col-sm-12">
+          <div class="col-sm-12" @slide>
             <div class="form-group">
               <input type="text" id="name" [ngClass]="{'is-invalid' : newPostForm.get('title').touched && newPostForm.get('title').errors}"formControlName="title" class="form-control" placeholder="Title">
               <span *ngIf="newPostForm.get('title').errors && newPostForm.get('title').touched" class="invalid-feedback">Incorrect format</span>
             </div>
           </div>
 
-          <div class="col-sm-12">
+          <div class="col-sm-12" @slide>
             <div class="form-group">
               <input [ngClass]="{'is-invalid' : newPostForm.get('tags').touched && newPostForm.get('tags').errors}" type="text" formControlName="tags" id="tags" class="form-control" placeholder="Tags">
               <span *ngIf="newPostForm.get('tags').errors && newPostForm.get('tags').touched" class="invalid-feedback">Incorrect format</span>
@@ -58,7 +27,7 @@
           </div>
 
 
-          <div class="col-sm-12">
+          <div class="col-sm-12" @slide>
             <select id="category" formControlName="category" class="form-group form-control" [ngClass]="{'is-invalid' : newPostForm.get('category').touched && newPostForm.get('category').errors}">
               <option value="0" disabled>Category</option>
               <option>Website Design & Development</option>
@@ -70,35 +39,25 @@
             </select>
           </div>
 
-          <!-- <div class="col-sm-12">
-            <button type="button" class="commands">Bold</button>
-            <button type="button" class="commands">Italic</button>
-            <button type="button" class="commands">Insert a link</button>
-            <button type="button" class="commands">Insert a photo</button>
-            <button type="button" class="commands">Insert a quote</button>
-            <button type="button" class="commands">Make an unordered list</button>
-            <button type="button" class="commands">Make an ordered list</button>
-          </div> -->
-
-          <div class="col-sm-12">
+          <div class="col-sm-12" @slide>
             <div class="textarea-message form-group">
               <textarea [ngClass]="{'is-invalid' : newPostForm.get('content').touched && newPostForm.get('content').errors}" name="content" formControlName="content" rows="15" class="textarea-message form-control" id="content"></textarea>
               <span *ngIf="newPostForm.get('content').errors && newPostForm.get('content').touched" class="invalid-feedback">Incorrect format</span>
             </div>
           </div>
 
-          <div class="col-sm-6">
+          <div class="col-sm-6" @slide>
             <div class="form-group">
               <label><input formControlName="photos" class="form-control" type="file"/>Upload</label>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6" @slide>
             <div class="form-group">
               <label>Choose a poll</label>
             </div>
           </div>
 
-          <div class="col-sm-12">
+          <div class="col-sm-12" @scale>
             <div class="text-center">
               <button type="submit" class="load-more-button">Post</button>
             </div>

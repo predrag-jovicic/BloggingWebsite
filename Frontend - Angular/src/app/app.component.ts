@@ -4,24 +4,14 @@ import { Router, NavigationExtras } from '@angular/router';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { setClassMetadata } from '@angular/core/src/render3';
 import { shouldCallLifecycleInitHook } from '@angular/core/src/view';
+import { extend } from './shared/Animations/extend';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations : [
-    trigger('fade',[
-      transition("void => *",[
-        style({opacity:0}),
-        animate('2s 0.5s')
-      ])
-    ]),
-    trigger('extend',[
-      transition("void => *",[
-        style({width:0,opacity:0}),
-        animate('0.8s')
-      ])
-    ])
+    extend
   ]
 })
 export class AppComponent {

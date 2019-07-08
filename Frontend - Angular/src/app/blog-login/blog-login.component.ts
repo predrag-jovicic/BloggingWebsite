@@ -3,24 +3,15 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { slide } from '../shared/Animations/slide';
+import { scale } from '../shared/Animations/scale';
 
 @Component({
   selector: 'app-blog-login',
   templateUrl: './blog-login.component.html',
   styleUrls: ['./blog-login.component.css'],
   animations: [
-    trigger('slide',[
-      transition("void => *",[
-        style({transform:'translateX(35px)',opacity:0}),
-        animate('0.6s')
-      ])
-    ]),
-    trigger('scale',[
-      transition("void => *",[
-        style({transform:'scale(0.5)'}),
-        animate('0.6s')
-      ])
-    ])
+    scale,slide
   ]
 })
 export class BlogLoginComponent implements OnInit {

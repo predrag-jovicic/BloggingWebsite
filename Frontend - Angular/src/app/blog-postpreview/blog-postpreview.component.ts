@@ -4,19 +4,14 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { PostsService } from './../shared/posts.service'; 
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { IRecentPost } from './IRecentPost';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { scale } from '../shared/Animations/scale';
 
 @Component({
   selector: 'app-blog-postpreview',
   templateUrl: './blog-postpreview.component.html',
   styleUrls: ['./blog-postpreview.component.css'],
   animations : [
-    trigger('scale',[
-      transition("void => *",[
-        style({transform:'scale(1.1)',opacity:0}),
-        animate('0.4s')
-      ])
-    ])
+    scale
   ]
 })
 export class BlogPostpreviewComponent implements OnInit {

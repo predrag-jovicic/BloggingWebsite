@@ -3,6 +3,7 @@ import { CategoriesService } from './../shared/categories.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ICategory } from './iCategory';
 import { NavigationExtras, Router } from '@angular/router';
+import { slide } from '../shared/Animations/slide';
 
 @Component({
   selector: 'app-blog-categories',
