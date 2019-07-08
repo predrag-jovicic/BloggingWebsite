@@ -25,16 +25,18 @@
         <span class="invalid-feedback" *ngIf="registerForm.get('username').errors && registerForm.get('username').touched">Incorrect format</span>
       </div>
     </div>
-    <div class="col-sm-12" @slideUp>
-      <div class="form-group">
-        <input type="password" formControlName="password" class="form-control" placeholder="Password" [ngClass]="{'is-invalid' : registerForm.get('password').touched && registerForm.get('password').errors}">
-        <span class="invalid-feedback" *ngIf="registerForm.get('password').errors && registerForm.get('password').touched">Incorrect format</span>
+    <div formGroupName="passwordGroup">
+      <div class="col-sm-12" @slideUp>
+        <div class="form-group">
+          <input type="password" formControlName="password" class="form-control" placeholder="Password" [ngClass]="{'is-invalid' : (registerForm.get('passwordGroup.password').touched && registerForm.get('passwordGroup.password').errors) || registerForm.get('passwordGroup').errors}">
+          <span class="invalid-feedback" *ngIf="(registerForm.get('passwordGroup.password').errors && registerForm.get('passwordGroup.password').touched) || registerForm.get('passwordGroup').errors">Incorrect format. Passwords must match.</span>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-12" @slideUp>
-      <div class="form-group">
-        <input type="password" formControlName="confpassword" class="form-control" placeholder="Confirm password" [ngClass]="{'is-invalid' : registerForm.get('confpassword').touched && registerForm.get('confpassword').errors}">
-        <span class="invalid-feedback" *ngIf="registerForm.get('confpassword').errors && registerForm.get('confpassword').touched">Incorrect format</span>
+      <div class="col-sm-12" @slideUp>
+        <div class="form-group">
+          <input type="password" formControlName="confpassword" class="form-control" placeholder="Confirm password" [ngClass]="{'is-invalid' : (registerForm.get('passwordGroup.confpassword').touched && registerForm.get('passwordGroup.confpassword').errors) || registerForm.get('passwordGroup').errors}">
+          <span class="invalid-feedback" *ngIf="(registerForm.get('passwordGroup.confpassword').errors && registerForm.get('passwordGroup.confpassword').touched) || registerForm.get('passwordGroup').errors">Incorrect format. Passwords must match.</span>
+        </div>
       </div>
     </div>
     <div class="col-sm-12" @slideUp>

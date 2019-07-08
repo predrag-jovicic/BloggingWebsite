@@ -123,15 +123,15 @@ namespace Web_API.Controllers
                 if (result.Succeeded)
                 {
                     result = await this.userManager.AddToRoleAsync(user, "Blogger");
-                    if (!result.Succeeded)
+                    if (result.Succeeded)
                     {
-                        string token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-                        this.emailSender.ToEmail = newUser.Email;
-                        this.emailSender.Subject = "Blogging Website - Verify your account";
-                        var path = Url.Action("VerifyAccount", new { uid = user.Id, token = token });
-                        this.emailSender.Body = $"Click on this <a href=\"{path}\">link</a> to verify your account.";
-                        this.emailSender.Send();
-                        return CreatedAtAction("GetUser",user.Id);
+                        //string token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+                        //this.emailSender.ToEmail = newUser.Email;
+                        //this.emailSender.Subject = "Blogging Website - Verify your account";
+                        //var path = Url.Action("VerifyAccount", new { uid = user.Id, token = token });
+                        //this.emailSender.Body = $"Click on this <a href=\"{path}\">link</a> to verify your account.";
+                        //this.emailSender.Send();
+                        return StatusCode(201);
                     }
                     else
                         return StatusCode(500);

@@ -3,6 +3,7 @@ import { map, tap, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IUser } from './ViewModels/IUser';
+import { IUserRegistration } from './ViewModels/IUserRegistration';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,9 @@ export class AuthenticationserviceService {
 
   logOut(){
     localStorage.removeItem('loggedUser');
+  }
+
+  register(user : IUserRegistration){
+    return this.http.post<IUserRegistration>(`${this.url}/register`,user);
   }
 }
