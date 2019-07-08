@@ -1,9 +1,6 @@
 import { AuthenticationserviceService } from './shared/authenticationservice.service';
 import { Component } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { trigger, transition, animate, style } from '@angular/animations';
-import { setClassMetadata } from '@angular/core/src/render3';
-import { shouldCallLifecycleInitHook } from '@angular/core/src/view';
 import { extend } from './shared/Animations/extend';
 
 @Component({

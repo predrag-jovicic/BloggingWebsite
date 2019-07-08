@@ -1,5 +1,4 @@
 import { QueryParam } from './QueryParam';
-import { tap, filter } from 'rxjs/operators';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { PostsService } from './../shared/posts.service'; 
 import { Component, OnInit, OnChanges } from '@angular/core';
