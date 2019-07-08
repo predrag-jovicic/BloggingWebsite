@@ -29,13 +29,8 @@
 
           <div class="col-sm-12" @slide>
             <select id="category" formControlName="category" class="form-group form-control" [ngClass]="{'is-invalid' : newPostForm.get('category').touched && newPostForm.get('category').errors}">
-              <option value="0" disabled>Category</option>
-              <option>Website Design & Development</option>
-              <option>Wordpress Development</option>
-              <option>Search Engine Optimization</option>
-              <option>Mobile Website</option>
-              <option>I Want to General Talk</option>
-              <option>Other</option>
+              <option value="0">Choose</option>
+              <option [value]="category.categoryId" *ngFor='let category of categories'>{{category.name}}</option>
             </select>
           </div>
 
@@ -43,17 +38,6 @@
             <div class="textarea-message form-group">
               <textarea [ngClass]="{'is-invalid' : newPostForm.get('content').touched && newPostForm.get('content').errors}" name="content" formControlName="content" rows="15" class="textarea-message form-control" id="content"></textarea>
               <span *ngIf="newPostForm.get('content').errors && newPostForm.get('content').touched" class="invalid-feedback">Incorrect format</span>
-            </div>
-          </div>
-
-          <div class="col-sm-6" @slide>
-            <div class="form-group">
-              <label><input formControlName="photos" class="form-control" type="file"/>Upload</label>
-            </div>
-          </div>
-          <div class="col-sm-6" @slide>
-            <div class="form-group">
-              <label>Choose a poll</label>
             </div>
           </div>
 

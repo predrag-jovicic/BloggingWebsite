@@ -1,17 +1,21 @@
-<table *ngIf='this.unapprovedComments && this.unapprovedComments.length > 0; else elseBlock' class="table table-hover table-responsive">
-  <h1>Unapproved comments</h1>
-  <tr>
-    <th>Username</th>
-    <th>Comment</th>
-    <th>Time</th>
-  </tr>
-  <tr *ngFor='let comment of unapprovedComments' @reveal>
-    <td>{{comment.authorName}}</td>
-    <td>{{comment.text}}</td>
-    <td>{{comment.postedOn | date : 'medium'}}</td>
-    <td><a (click)="onClickApprove($event)" [attr.data-id]="comment.commentId">Approve</a></td>
-    <td><a (click)="onClickDelete($event)" [attr.data-id]="comment.commentId">Delete</a></td>
-  </tr>
-</table>
-<ng-template #elseBlock><h1>There's no comments to show.</h1></ng-template>
-
+<div class="col-md-12 blog-post">
+  <table *ngIf='this.unapprovedComments && this.unapprovedComments.length > 0; else elseBlock'
+    class="table table-hover table-responsive">
+    <h1>Unapproved comments</h1>
+    <tr>
+      <th>Username</th>
+      <th>Comment</th>
+      <th>Time</th>
+    </tr>
+    <tr *ngFor='let comment of unapprovedComments' @reveal>
+      <td>{{comment.authorName}}</td>
+      <td>{{comment.text}}</td>
+      <td>{{comment.postedOn | date : 'medium'}}</td>
+      <td><a (click)="onClickApprove($event)" [attr.data-id]="comment.commentId">Approve</a></td>
+      <td><a (click)="onClickDelete($event)" [attr.data-id]="comment.commentId">Delete</a></td>
+    </tr>
+  </table>
+  <ng-template #elseBlock>
+    <h1>There's no comments to show.</h1>
+  </ng-template>
+</div>

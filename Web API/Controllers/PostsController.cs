@@ -86,7 +86,7 @@ namespace Web_API.Controllers
                     });
                 }
                 await this.unitOfWork.Save();
-                return CreatedAtAction("PostGet", new { id = post.PostId });
+                return CreatedAtAction("Post", new { id = post.PostId });
             }
             else
             {

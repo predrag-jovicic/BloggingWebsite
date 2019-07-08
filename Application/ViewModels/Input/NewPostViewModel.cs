@@ -11,7 +11,7 @@ namespace Application.ViewModels.Input
         [Required]
         [RegularExpression(@"^[\w\s\?\.\:\,\!\-\&\%\#]{3,60}$",ErrorMessage = "Content is not in valid format.")]
         public string Title { get; set; }
-        [StringListValidation(@"^[\w\-]{3,20}$")]
+        [StringListValidation(@"^[\w\-]{3,75}$")]
         public IEnumerable<string> Tags { get; set; }
         [Range(1,short.MaxValue)]
         [Required]

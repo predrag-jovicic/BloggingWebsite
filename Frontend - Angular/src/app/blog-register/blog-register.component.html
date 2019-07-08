@@ -1,52 +1,55 @@
-<h2>Register</h2>
-<form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
-  <div class="row">
-    <div class="col-sm-12" @slideUp>
-      <div class="form-group">
-        <input type="text" formControlName="firstname" class="form-control" placeholder="First name" [ngClass]="{'is-invalid' : registerForm.get('firstname').touched && registerForm.get('firstname').errors}">
-        <span class="invalid-feedback" *ngIf="registerForm.get('firstname').errors && registerForm.get('firstname').touched">Incorrect format</span>
-      </div>
-    </div>
-    <div class="col-sm-12" @slideUp>
-      <div class="form-group">
-        <input type="text" formControlName="lastname" class="form-control" placeholder="Last name" [ngClass]="{'is-invalid' : registerForm.get('lastname').touched && registerForm.get('lastname').errors}">
-        <span class="invalid-feedback" *ngIf="registerForm.get('lastname').errors && registerForm.get('lastname').touched">Incorrect format</span>
-      </div>
-    </div>
-    <div class="col-sm-12" @slideUp>
-      <div class="form-group">
-        <input type="text" formControlName="email" class="form-control" placeholder="Email" [ngClass]="{'is-invalid' : registerForm.get('email').touched && registerForm.get('email').errors}">
-        <span class="invalid-feedback" *ngIf="registerForm.get('email').errors && registerForm.get('email').touched">Incorrect format</span>
-      </div>
-    </div>
-    <div class="col-sm-12" @slideUp>
-      <div class="form-group">
-        <input type="text" formControlName="username" class="form-control" placeholder="Username" [ngClass]="{'is-invalid' : registerForm.get('username').touched && registerForm.get('username').errors}">
-        <span class="invalid-feedback" *ngIf="registerForm.get('username').errors && registerForm.get('username').touched">Incorrect format</span>
-      </div>
-    </div>
-    <div formGroupName="passwordGroup">
-      <div class="col-sm-12" @slideUp>
-        <div class="form-group">
-          <input type="password" formControlName="password" class="form-control" placeholder="Password" [ngClass]="{'is-invalid' : (registerForm.get('passwordGroup.password').touched && registerForm.get('passwordGroup.password').errors) || registerForm.get('passwordGroup').errors}">
-          <span class="invalid-feedback" *ngIf="(registerForm.get('passwordGroup.password').errors && registerForm.get('passwordGroup.password').touched) || registerForm.get('passwordGroup').errors">Incorrect format. Passwords must match.</span>
+<div class="col-md-12 blog-post">
+    <h2>Register</h2>
+    <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+      <div class="row">
+        <div class="col-sm-12" @slideUp>
+          <div class="form-group">
+            <input type="text" formControlName="firstname" class="form-control" placeholder="First name" [ngClass]="{'is-invalid' : registerForm.get('firstname').touched && registerForm.get('firstname').errors}">
+            <span class="invalid-feedback" *ngIf="registerForm.get('firstname').errors && registerForm.get('firstname').touched">Incorrect format</span>
+          </div>
+        </div>
+        <div class="col-sm-12" @slideUp>
+          <div class="form-group">
+            <input type="text" formControlName="lastname" class="form-control" placeholder="Last name" [ngClass]="{'is-invalid' : registerForm.get('lastname').touched && registerForm.get('lastname').errors}">
+            <span class="invalid-feedback" *ngIf="registerForm.get('lastname').errors && registerForm.get('lastname').touched">Incorrect format</span>
+          </div>
+        </div>
+        <div class="col-sm-12" @slideUp>
+          <div class="form-group">
+            <input type="text" formControlName="email" class="form-control" placeholder="Email" [ngClass]="{'is-invalid' : registerForm.get('email').touched && registerForm.get('email').errors}">
+            <span class="invalid-feedback" *ngIf="registerForm.get('email').errors && registerForm.get('email').touched">Incorrect format</span>
+          </div>
+        </div>
+        <div class="col-sm-12" @slideUp>
+          <div class="form-group">
+            <input type="text" formControlName="username" class="form-control" placeholder="Username" [ngClass]="{'is-invalid' : registerForm.get('username').touched && registerForm.get('username').errors}">
+            <span class="invalid-feedback" *ngIf="registerForm.get('username').errors && registerForm.get('username').touched">Incorrect format</span>
+          </div>
+        </div>
+        <div formGroupName="passwordGroup">
+          <div class="col-sm-12" @slideUp>
+            <div class="form-group">
+              <input type="password" formControlName="password" class="form-control" placeholder="Password" [ngClass]="{'is-invalid' : (registerForm.get('passwordGroup.password').touched && registerForm.get('passwordGroup.password').errors) || registerForm.get('passwordGroup').errors}">
+              <span class="invalid-feedback" *ngIf="(registerForm.get('passwordGroup.password').errors && registerForm.get('passwordGroup.password').touched) || registerForm.get('passwordGroup').errors">Incorrect format. Passwords must match.</span>
+            </div>
+          </div>
+          <div class="col-sm-12" @slideUp>
+            <div class="form-group">
+              <input type="password" formControlName="confpassword" class="form-control" placeholder="Confirm password" [ngClass]="{'is-invalid' : (registerForm.get('passwordGroup.confpassword').touched && registerForm.get('passwordGroup.confpassword').errors) || registerForm.get('passwordGroup').errors}">
+              <span class="invalid-feedback" *ngIf="(registerForm.get('passwordGroup.confpassword').errors && registerForm.get('passwordGroup.confpassword').touched) || registerForm.get('passwordGroup').errors">Incorrect format. Passwords must match.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12" @slideUp>
+          <div class="form-group">
+            <textarea rows="15" class="form-control" formControlName="biography" placeholder="Biography" [ngClass]="{'is-invalid' : registerForm.get('biography').touched && registerForm.get('biography').errors}"></textarea>
+            <span class="invalid-feedback"  *ngIf="registerForm.get('biography').errors && registerForm.get('biography').touched">Incorrect format</span>
+          </div>
+        </div>
+        <div class="text-center" @slideUp>
+          <button type="submit" class="load-more-button">Register</button>
         </div>
       </div>
-      <div class="col-sm-12" @slideUp>
-        <div class="form-group">
-          <input type="password" formControlName="confpassword" class="form-control" placeholder="Confirm password" [ngClass]="{'is-invalid' : (registerForm.get('passwordGroup.confpassword').touched && registerForm.get('passwordGroup.confpassword').errors) || registerForm.get('passwordGroup').errors}">
-          <span class="invalid-feedback" *ngIf="(registerForm.get('passwordGroup.confpassword').errors && registerForm.get('passwordGroup.confpassword').touched) || registerForm.get('passwordGroup').errors">Incorrect format. Passwords must match.</span>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-12" @slideUp>
-      <div class="form-group">
-        <textarea rows="15" class="form-control" formControlName="biography" placeholder="Biography" [ngClass]="{'is-invalid' : registerForm.get('biography').touched && registerForm.get('biography').errors}"></textarea>
-        <span class="invalid-feedback"  *ngIf="registerForm.get('biography').errors && registerForm.get('biography').touched">Incorrect format</span>
-      </div>
-    </div>
-    <div class="text-center" @slideUp>
-      <button type="submit" class="load-more-button">Register</button>
-    </div>
-  </div>
-</form>
+    </form>
+    
+</div>
