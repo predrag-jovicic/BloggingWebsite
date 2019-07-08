@@ -1,12 +1,11 @@
-import { INewPost } from './../shared/ViewModels/INewPost';
-import { PostsService } from './../shared/posts.service';
-import { CategoriesService } from './../shared/categories.service';
+import { PostsService } from '../../shared/posts.service';
+import { CategoriesService } from '../../shared/categories.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { slide } from '../shared/Animations/slide';
-import { scale } from '../shared/Animations/scale';
-import { ICategory } from '../blog-categories/iCategory';
-import { INewPost } from '../shared/ViewModels/INewPost';
+import { slide } from '../../shared/Animations/slide';
+import { scale } from '../../shared/Animations/scale';
+import { ICategory } from '../../blog-categories/iCategory';
+import { INewPost } from '../../shared/ViewModels/INewPost';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-blog-createpost',

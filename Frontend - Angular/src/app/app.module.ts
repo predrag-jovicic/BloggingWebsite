@@ -1,40 +1,28 @@
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { BlogCategoriesComponent } from './blog-categories/blog-categories.component';
-import { BlogPopulartagsComponent } from './blog-populartags/blog-populartags.component';
-import { BlogPostpreviewComponent } from './blog-postpreview/blog-postpreview.component';
-import { BlogPostdetailsComponent } from './blog-postdetails/blog-postdetails.component';
-import { BlogCreatepostComponent } from './blog-createpost/blog-createpost.component';
-import { NotFoundPageComponentComponent } from './not-found-page-component/not-found-page-component.component';
-import { BlogCommentsComponent } from './blog-comments/blog-comments.component';
-import { BlogRecommendedpostsComponent } from './blog-recommendedposts/blog-recommendedposts.component';
-import { BlogCommentComponent } from './blog-comment/blog-comment.component';
+import { BlogPostpreviewComponent } from './blog-posts/blog-postpreview/blog-postpreview.component';
+import { BlogPostdetailsComponent } from './blog-posts/blog-postdetails/blog-postdetails.component';
+import { BlogCreatepostComponent } from './blog-posts/blog-createpost/blog-createpost.component';
+import { NotFoundPageComponentComponent } from './shared/not-found-page-component/not-found-page-component.component';
 import { BlogLoginComponent } from './blog-login/blog-login.component';
 import { BlogRegisterComponent } from './blog-register/blog-register.component';
 import { AuthguardService } from './shared/AuthguardService';
 import { BlogModeratorpanelComponent } from './blog-moderatorpanel/blog-moderatorpanel.component';
+import { CategoryModule } from './blog-categories/category.module';
+import { CommentModule } from './blog-comments/comment.module';
+import { TagModule } from './blog-populartags/tag.module';
+import { LoginModule } from './blog-login/login.module';
+import { RegistrationModule } from './blog-register/registration.module';
+import { ModeratorpanelModule } from './blog-moderatorpanel/moderatorpanel.module';
+import { PostModule } from './blog-posts/post.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BlogCategoriesComponent,
-    BlogPopulartagsComponent,
-    BlogPostpreviewComponent,
-    BlogPostdetailsComponent,
-    BlogCreatepostComponent,
-    NotFoundPageComponentComponent,
-    BlogCommentsComponent,
-    BlogRecommendedpostsComponent,
-    BlogCommentComponent,
-    BlogLoginComponent,
-    BlogRegisterComponent,
-    BlogModeratorpanelComponent
+    NotFoundPageComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -48,9 +36,13 @@ import { BlogModeratorpanelComponent } from './blog-moderatorpanel/blog-moderato
       { path: 'moderator-panel',component:BlogModeratorpanelComponent, canActivate : [AuthguardService],data:{roles:["Moderator"]}},
       { path: '**', component: NotFoundPageComponentComponent}
     ]),
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule
+    CategoryModule,
+    CommentModule,
+    TagModule,
+    LoginModule,
+    RegistrationModule,
+    ModeratorpanelModule,
+    PostModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,10 @@
 import { AuthenticationserviceService } from './authenticationservice.service';
-import { IRecentPost } from './../blog-postpreview/IRecentPost';
+import { IRecentPost } from '../blog-posts/blog-postpreview/IRecentPost';
 import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
-import { IPost } from '../blog-postdetails/IPost';
-import { IRecommendedPost } from '../blog-recommendedposts/IRecommendedPost';
-import { QueryParam } from '../blog-postpreview/QueryParam';
+import { IPost } from '../blog-posts/blog-postdetails/IPost';
+import { IRecommendedPost } from '../blog-posts/blog-recommendedposts/IRecommendedPost';
 import { INewPost } from './ViewModels/INewPost';
 
 @Injectable({

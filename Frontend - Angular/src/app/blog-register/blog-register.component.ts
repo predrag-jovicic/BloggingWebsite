@@ -1,7 +1,7 @@
+import { slideUp } from './../shared/Animations/slideUp';
 import { AuthenticationserviceService } from './../shared/authenticationservice.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { slideUp } from '../shared/Animations/slideUp';
 import { IUserRegistration } from '../shared/ViewModels/IUserRegistration';
 import { Router } from '@angular/router';
 

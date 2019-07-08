@@ -1,9 +1,9 @@
 import { QueryParam } from './QueryParam';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { PostsService } from './../shared/posts.service'; 
+import { PostsService } from '../../shared/posts.service'; 
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { IRecentPost } from './IRecentPost';
-import { scale } from '../shared/Animations/scale';
+import { scale } from 'src/app/shared/Animations/scale';
 
 @Component({
   selector: 'app-blog-postpreview',

@@ -1,4 +1,4 @@
-import { PostsService } from './../shared/posts.service';
+import { PostsService } from '../../shared/posts.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { IRecommendedPost } from './IRecommendedPost';
 

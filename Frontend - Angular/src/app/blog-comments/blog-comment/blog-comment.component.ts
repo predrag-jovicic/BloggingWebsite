@@ -1,4 +1,4 @@
-import { IComment } from './../blog-comments/IComment';
+import { IComment } from '../IComment';
 import { Component, OnInit, Input } from '@angular/core';
 import { CommentcommunicationService } from 'src/app/shared/commentcommunication.service';
 
