@@ -167,6 +167,8 @@ namespace Web_API.Controllers
                     return Forbid();
                 else
                 {
+                    var comments = this.unitOfWork.CommentsRepository.GetCommentsByPostId(id);
+                    this.unitOfWork.CommentsRepository.Delete(comments);
                     this.unitOfWork.PostsRepository.Delete(post);
                     await this.unitOfWork.Save();
                     return NoContent();

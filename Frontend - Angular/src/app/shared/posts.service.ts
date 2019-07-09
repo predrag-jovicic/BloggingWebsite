@@ -35,4 +35,13 @@ export class PostsService {
     };
     return this.httpClient.post<INewPost>(this.url,post,httpOptions);
   }
+
+  deletePost(id){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.authService.currentUser.token}`
+      })
+    };
+    return this.httpClient.delete(this.url + id,httpOptions);
+  }
 }

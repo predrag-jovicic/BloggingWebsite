@@ -5,13 +5,16 @@
   <div class="post-title" @slideLeft>
     <h1>{{post.title}}</h1>
   </div>
+  <div *ngIf='this.authService.currentUser && (this.authService.currentUser.user == this.post.authorUsername || this.authService.currentUser.role == "Moderator")'>
+    <a (click)="delete()"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Delete</a>
+  </div>
   <!-- Post Headline End -->
 
 
   <!-- Post Detail Start -->
   <div class="post-info" @slideLeft>
     <span>{{post.postedOn | date}} / by
-      <a href="#" target="_blank">{{post.authorFirstName}} {{post.authorFirstName}}</a>
+      <a href="#" target="_blank">{{post.authorFirstName}} {{post.authorLastName}}</a>
     </span>
   </div>
   <!-- Post Detail End -->

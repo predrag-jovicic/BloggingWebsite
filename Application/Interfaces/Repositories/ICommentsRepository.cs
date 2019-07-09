@@ -11,6 +11,8 @@ namespace Application.Interfaces.Repositories
         void Add(Comment comment);
         Comment GetById(long id);
         void ApproveComment(Comment comment);
+        IEnumerable<Comment> GetCommentsByPostId(long postId);
         void Delete(Comment comment);
+        void Delete(IEnumerable<Comment> comments);
     }
 }

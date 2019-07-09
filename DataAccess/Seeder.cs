@@ -34,18 +34,7 @@ namespace DataAccess
             }
             if (!context.Users.Any())
             {
-                User user = new User
-                {
-                    FirstName = "Predrag",
-                    LastName = "Jovicic",
-                    Biography = "I am a blogger.",
-                    Email = "predragjovicic333@gmail.com",
-                    UserName = "peksi",
-                    EmailConfirmed = true
-                };
-                await userManager.CreateAsync(user, "P@ssWord3!");
-                await userManager.AddToRoleAsync(user, "Blogger");
-                user = new User
+                var user = new User
                 {
                     FirstName = "Jane",
                     LastName = "Doe",
@@ -57,6 +46,18 @@ namespace DataAccess
                 };
                 await userManager.CreateAsync(user, "P@ssWord3!");
                 await userManager.AddToRoleAsync(user, "Moderator");
+
+                user = new User
+                {
+                    FirstName = "Predrag",
+                    LastName = "Jovicic",
+                    Biography = "I am a blogger.",
+                    Email = "predragjovicic333@gmail.com",
+                    UserName = "peksi",
+                    EmailConfirmed = true
+                };
+                await userManager.CreateAsync(user, "P@ssWord3!");
+                await userManager.AddToRoleAsync(user, "Blogger");
 
                 var post = new Post
                 {
@@ -187,6 +188,7 @@ namespace DataAccess
                     },
                 };
                 context.PostTags.AddRange(postTags);
+
                 context.SaveChanges();
             }
         }
