@@ -21,6 +21,11 @@ namespace Implementations.Repositories
             return this.context.Comments;
         }
 
+        public IEnumerable<Comment> GetCommentsByPostId(long postId)
+        {
+            return this.context.Comments.Where(p => p.PostId == postId);
+        }
+
         public void Add(Comment comment)
         {
             this.context.Comments.Add(comment);
@@ -40,6 +45,11 @@ namespace Implementations.Repositories
         public void Delete(Comment comment)
         {
             this.context.Comments.Remove(comment);
+        }
+
+        public void Delete(IEnumerable<Comment> comments)
+        {
+            this.context.Comments.RemoveRange(comments);
         }
     }
 }

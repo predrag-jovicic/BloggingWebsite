@@ -42,6 +42,7 @@ export class BlogCommentsComponent implements OnInit {
 
   replyCommentSelected($event){
     this.replyCommentId = $event.target.getAttribute("data-id");
+    alert("You have selected a comment to reply to.");
   }
 
   onSubmit(){
@@ -57,7 +58,10 @@ export class BlogCommentsComponent implements OnInit {
         replyOnId : this.replyCommentId
       };
       this.commentsService.postComment(comment).subscribe(
-        result => alert("The comment will be visible after a moderator confirms it obeys our rules."),
+        result => {
+          alert("The comment will be visible after a moderator confirms it obeys our rules.");
+          this.commentFormGroup.reset();
+        },
         error => alert(error.textStatus)
       );
     }

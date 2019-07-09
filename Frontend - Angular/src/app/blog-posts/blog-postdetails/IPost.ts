@@ -9,5 +9,6 @@ export interface IPost
     userId : number,
     authorFirstName : string,
     authorLastName : string,
-    authorBiography : string
+    authorBiography : string,
+    authorUsername : string
 }

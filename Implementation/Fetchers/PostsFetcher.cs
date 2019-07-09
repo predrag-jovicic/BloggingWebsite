@@ -73,7 +73,8 @@ namespace Implementations.Fetchers
                     NumberOfViews = p.NumberOfViews,
                     AuthorLastName = p.User.LastName,
                     AuthorFirstName = p.User.FirstName,
-                    AuthorBiography = p.User.Biography
+                    AuthorBiography = p.User.Biography,
+                    AuthorUsername = p.User.UserName
                 };
             else return null;
         }

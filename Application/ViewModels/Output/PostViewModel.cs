@@ -25,5 +25,7 @@ namespace Application.ViewModels.Output
         public string AuthorLastName { get; set; }
         [Display(Name = "Biography")]
         public string AuthorBiography { get; set; }
+        [Display(Name = "Username")]
+        public string AuthorUsername { get; set; }
     }
 }
