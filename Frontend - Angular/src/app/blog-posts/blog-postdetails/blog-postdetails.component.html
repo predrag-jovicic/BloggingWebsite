@@ -35,6 +35,6 @@
   </div>
   <!-- Post Author Bio Box End -->
 
-  <app-blog-recommendedposts [postId]='post.postId' @slideUp></app-blog-recommendedposts>
+  <app-blog-recommendedposts (recommendedEvent)="onChangePost($event)" [postId]='post.postId' @slideUp></app-blog-recommendedposts>
   <app-blog-comments [postId]='post.postId' @slideUp></app-blog-comments>
 </div>

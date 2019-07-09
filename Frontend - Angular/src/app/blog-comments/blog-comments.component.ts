@@ -18,6 +18,10 @@ export class BlogCommentsComponent implements OnInit {
 
   ngOnInit() {
     this.commentsService.getCommentsByPost(this.postId).subscribe(comments => this.comments = comments);
+    this.commentCommunicationService.postChanged.subscribe(id => { 
+      this.postId = id;
+      this.commentsService.getCommentsByPost(id).subscribe(comments => this.comments = comments);
+    });
     this.commentCommunicationService.replyCommentSelected.subscribe(
       result => {
         this.replyCommentId = result;
