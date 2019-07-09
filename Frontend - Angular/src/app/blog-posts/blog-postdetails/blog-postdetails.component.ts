@@ -1,8 +1,9 @@
 import { PostsService } from '../../shared/posts.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IPost } from './IPost';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-blog-postdetails',
@@ -30,6 +31,10 @@ export class BlogPostdetailsComponent implements OnInit {
 
   ngOnInit() {
     var id = this.route.snapshot.params['id'];
+    this.postsService.getPostDetails(id).subscribe(post => this.post = post);
+  }
+
+  onChangePost(id){
     this.postsService.getPostDetails(id).subscribe(post => this.post = post);
   }
 

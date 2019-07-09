@@ -3,7 +3,7 @@
   <h3>You may also like</h3>
   <div class="row">
     <div *ngFor='let recommended of recommendations' class="col-md-4 col-sm-6 col-xs-12">
-      <a [routerLink]="['/postdetails',recommended.postId]">
+      <a [attr.data-id]="recommended.postId" (click)="onClick($event)">
         <p>{{recommended.title}}</p>
       </a>
     </div>

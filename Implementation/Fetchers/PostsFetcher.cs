@@ -38,7 +38,7 @@ namespace Implementations.Fetchers
                 {
                     PostId = p.PostId,
                     Title = p.Title,
-                    PartialText = p.Text.Substring(0, 100),
+                    PartialText = p.Text.Substring(0, 150) + "...",
                     PostedOn = p.PostedOn,
                     AuthorFirstName = p.User.FirstName,
                     AuthorLastName = p.User.LastName,
