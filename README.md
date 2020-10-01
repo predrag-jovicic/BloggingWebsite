@@ -1,5 +1,5 @@
 # Blogging Website
-Blogging website which can easily be customized for any type of a blog. Technology stack: ASP NET Core Web API + Angular 7
+An Amazing Blogging website which can easily be customized for any type of a blog. Technology stack: ASP NET Core Web API + Angular 7
 
 # Features:
 - Signing in 
