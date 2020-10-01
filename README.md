@@ -9,7 +9,7 @@ Blogging website which can easily be customized for any type of a blog. Technolo
 - Comment section
 - Filtering posts (tags or/and categories)
 - Searching for a post (keyword)
-- Approving commments (admin only)
+- Approving comments (admin only)
 - Deleting comments (admin only)
 
 
